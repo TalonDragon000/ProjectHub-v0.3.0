@@ -234,7 +234,7 @@ export default function App() {
 
             {/* Strategy Specs (Who, What, Why) */}
             <section className="space-y-2">
-              <span><h3 className="text-cyan-400 text-xs font-bold uppercase tracking-widest flex items-center"><Target className="w-4 h-4 mr-1"/> Strategy Specs<span className="text-[10px]">Coming Soon</span></h3>
+              <span><h3 className="text-cyan-400 text-xs font-bold uppercase tracking-widest flex items-center"><Target className="w-4 h-4 mr-1"/> Strategy Specs<div className="text-[10px]">Coming Soon</div></h3>
               <div className="grid grid-cols-3 gap-2">
                 {['WHO (Audience)', 'WHAT (Product)', 'WHY (Problem)'].map(spec => (
                   <div key={spec} className="bg-slate-900 p-3 rounded-xl border border-slate-800 border-dashed text-center flex flex-col justify-center items-center opacity-60">
