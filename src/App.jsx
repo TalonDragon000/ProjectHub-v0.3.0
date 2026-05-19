@@ -662,7 +662,7 @@ export default function App() {
       {goalToast && (
         <div className="absolute top-[45%] left-1/2 translate-y-2 -translate-x-1/2 z-[100] animate-in fade-in slide-in-from-top-4 duration-300 pointer-events-none">
           <div className="bg-slate-900 border border-pink-500 rounded-2xl py-12 px-12 shadow-[0_0_30px_rgba(236,72,153,0.35)] flex justify-center">
-            <div className="relative z-10 flex flex-col justify-center">
+            <div className="relative z-10 flex flex-col items-center">
               <h2>🎉</h2>
               <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-400 text-center">
                 Goal Crushed!
