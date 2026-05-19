@@ -665,9 +665,9 @@ export default function App() {
             <div className="relative z-10 flex flex-col items-center">
               <h2 className="text-7xl">🥳</h2>
               <h2 className="text-3xl mt-3 font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-400 text-center">
-                Goal Crushed!
+                Task Complete!
               </h2>
-              <p className="text-slate-300 mt-3 font-bold text-center">Momentum increased.</p>
+              <p className="text-slate-300 mt-3 font-bold text-center">Way to go!</p>
             </div>
           </div>
         </div>
