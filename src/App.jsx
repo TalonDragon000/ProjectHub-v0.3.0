@@ -214,7 +214,7 @@ export default function App() {
 
         {/* --- MODE A: STRATEGY DASHBOARD (HOME) --- */}
         {activeTab === 'home' && (
-          <div className="p-4 space-y-6 pb-24">
+          <div className="p-4 space-y-8 pb-24">
             {/* Progress & Mission */}
             <section className="flex items-center space-x-4 p-4 bg-slate-900 rounded-2xl border border-slate-800 shadow-lg">
               <div className="relative w-16 h-16 flex-shrink-0">
