@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Chrome as Home, LayoutList, Plus, CircleHelp as HelpCircle, X, Target, Briefcase, Zap, CircleCheck as CheckCircle2, ChevronRight, ChevronLeft, Folder, square-check-big as SquareCheckBig } from 'lucide-react';
+import { Chrome as Home, LayoutList, Plus, CircleHelp as HelpCircle, X, Target, Briefcase, Zap, CircleCheck as CheckCircle2, ChevronRight, ChevronLeft, Folder } from 'lucide-react';
 
 // --- INITIAL DATA & CONFIG ---
 const COLUMNS = ['High', 'Med', 'Low', 'Later', 'To Sort'];
@@ -283,7 +283,7 @@ export default function App() {
                 {completedTasks.slice().reverse().map(t => (
                   <div key={t.id} className="p-3 bg-slate-900 rounded-xl border border-slate-800 flex justify-between items-center opacity-60">
                     <span className="line-through text-slate-400 text-sm">{t.title}</span>
-                    <SquareCheckBig className="text-[10px] bg-cyan-900/30 text-cyan-400 px-2 py-1 rounded border border-cyan-800">Win</span>
+                    <span className="text-[10px] bg-cyan-900/30 text-cyan-400 px-2 py-1 rounded border border-cyan-800">Win</span>
                   </div>
                 ))}
               </div>
