@@ -658,11 +658,7 @@ export default function App() {
           <div className="bg-slate-900/90 border border-pink-500 rounded-3xl p-10 shadow-[0_0_60px_rgba(236,72,153,0.4)] flex flex-col items-center animate-in zoom-in-95 duration-300 relative overflow-hidden w-full max-w-sm">
             {/* Confetti Particles */}
             <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-              <div className="absolute text-4xl animate-ping opacity-75">🎉</div>
-              <div className="absolute text-3xl translate-y-24 translate-x-16 animate-bounce">✨</div>
-              <div className="absolute text-3xl translate-y-16 -translate-x-20 animate-bounce delay-100">🚀</div>
-              <div className="absolute text-3xl translate-y-16 -translate-x-12 animate-bounce delay-200">🔥</div>
-              <div className="absolute text-3xl translate-y-20 translate-x-16 animate-bounce delay-300">⭐</div>
+              <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
             </div>
             
             <div className="relative z-10 flex flex-col items-center">
