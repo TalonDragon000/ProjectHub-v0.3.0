@@ -32,7 +32,7 @@ const INITIAL_PROJECTS = [
 
 const INITIAL_TASKS = [
   { id: 1, projectId: 1, title: 'Swipe left or right to switch priority columns', reach: 5, impact: 8, confidence: 5, effort: 3, moscow: 'Must', column: 'High', completed: false, tags: ['Navigation'] },
-  { id: 2, projectId: 1, title: 'Long-press "+" to re-prioritize', reach: 8, impact: 5, confidence: 8, effort: 5, moscow: 'Should', column: 'Med', completed: false, tags: ['Organization'] },
+  { id: 2, projectId: 1, title: 'Long-press or tap "+" to re-prioritize', reach: 8, impact: 5, confidence: 8, effort: 5, moscow: 'Should', column: 'Med', completed: false, tags: ['Organization'] },
   { id: 3, projectId: 1, title: 'Complete task to archive', reach: 8, impact: 3, confidence: 3, effort: 8, moscow: 'Could', column: 'Low', completed: false, tags: ['Logs'] },
 ];
 
