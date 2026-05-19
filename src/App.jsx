@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Home, LayoutList, Plus, HelpCircle, X, Target, Briefcase, Zap, CheckCircle2, ChevronRight, ChevronLeft, Folder } from 'lucide-react';
+import { Chrome as Home, LayoutList, Plus, CircleHelp as HelpCircle, X, Target, Briefcase, Zap, CircleCheck as CheckCircle2, ChevronRight, ChevronLeft, Folder } from 'lucide-react';
 
 // --- INITIAL DATA & CONFIG ---
 const COLUMNS = ['High', 'Med', 'Low', 'Later', 'To Sort'];
@@ -35,6 +35,13 @@ const INITIAL_TASKS = [
   { id: 3, projectId: 1, title: 'Refactor State Management', reach: 8, impact: 3, confidence: 3, effort: 8, moscow: 'Could', column: 'Low', completed: false, tags: ['Maintenance'] },
 ];
 
+const fireConfetti = () => {
+  if (typeof window.confetti !== 'function') return;
+  const colors = ['#ec4899', '#06b6d4', '#a855f7', '#f59e0b', '#10b981'];
+  window.confetti({ particleCount: 80, spread: 70, origin: { x: 0.3, y: 0.6 }, colors });
+  window.confetti({ particleCount: 80, spread: 70, origin: { x: 0.7, y: 0.6 }, colors });
+};
+
 export default function App() {
   // --- APP STATE ---
   const [projects, setProjects] = useState(INITIAL_PROJECTS);
@@ -42,7 +49,7 @@ export default function App() {
   const [tasks, setTasks] = useState(INITIAL_TASKS);
   const [activeTab, setActiveTab] = useState('home'); // 'home' or 'tasks'
   const [activeColIndex, setActiveColIndex] = useState(0);
-  
+
   // --- MODAL & MENU STATES ---
   const [onboardingOpen, setOnboardingOpen] = useState(false);
   const [vaultOpen, setVaultOpen] = useState(false);
@@ -50,17 +57,17 @@ export default function App() {
   const [wizardOpen, setWizardOpen] = useState(false);
   const [quickNoteOpen, setQuickNoteOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
-  
+  const [goalToast, setGoalToast] = useState(false);
+
   // --- WIZARD FORM STATE ---
   const [wizardForm, setWizardForm] = useState({
     title: '', reach: 3, impact: 3, confidence: 3, effort: 3, moscow: 'Should', infoOpen: null, tags: []
   });
   const [customTagInput, setCustomTagInput] = useState('');
-  
+
   const [projectForm, setProjectForm] = useState({ name: '', mission: '' });
   const [quickNoteText, setQuickNoteText] = useState('');
-  const [confetti, setConfetti] = useState(false);
-  
+
   // --- SWIPE / GESTURE REFS ---
   const touchStartX = useRef(0);
   const pressTimer = useRef(null);
@@ -73,7 +80,7 @@ export default function App() {
 
   // --- LOGIC: RICE & MoSCoW ---
   const calculateScore = (r, i, c, e) => ((r * i * c) / e).toFixed(1);
-  
+
   const predictColumn = (score, moscow) => {
     if (moscow === "Won't") return 'Later';
     if (moscow === 'Must') return 'High';
@@ -125,7 +132,7 @@ export default function App() {
   const saveWizard = () => {
     const newScore = calculateScore(wizardForm.reach, wizardForm.impact, wizardForm.confidence, wizardForm.effort);
     const newCol = predictColumn(newScore, wizardForm.moscow);
-    
+
     if (editingTask) {
       setTasks(tasks.map(t => t.id === editingTask ? { ...t, ...wizardForm, column: newCol } : t));
     } else {
@@ -136,10 +143,10 @@ export default function App() {
 
   const saveQuickNote = () => {
     if (!quickNoteText.trim()) return;
-    setTasks([...tasks, { 
-      id: Date.now(), projectId: activeProjectId, title: quickNoteText, 
-      reach: 3, impact: 3, confidence: 3, effort: 3, moscow: 'Should', 
-      column: 'To Sort', completed: false, tags: [] 
+    setTasks([...tasks, {
+      id: Date.now(), projectId: activeProjectId, title: quickNoteText,
+      reach: 3, impact: 3, confidence: 3, effort: 3, moscow: 'Should',
+      column: 'To Sort', completed: false, tags: []
     }]);
     setQuickNoteText('');
     setQuickNoteOpen(false);
@@ -160,8 +167,9 @@ export default function App() {
   };
 
   const completeTask = (id) => {
-    setConfetti(true);
-    setTimeout(() => setConfetti(false), 2500);
+    fireConfetti();
+    setGoalToast(true);
+    setTimeout(() => setGoalToast(false), 2200);
     setTasks(tasks.map(t => t.id === id ? { ...t, completed: true } : t));
   };
 
@@ -180,14 +188,14 @@ export default function App() {
   // --- RENDERERS ---
   const currentScore = calculateScore(wizardForm.reach, wizardForm.impact, wizardForm.confidence, wizardForm.effort);
   const predictedColumn = predictColumn(currentScore, wizardForm.moscow);
-  
+
   // Roadmap logic
   const nowTasks = projectTasks.filter(t => t.column === 'High' && !t.completed);
   const nextTasks = projectTasks.filter(t => (t.column === 'Med' || t.column === 'Low') && !t.completed);
 
   return (
     <div className="w-full max-w-md mx-auto h-screen bg-slate-950 text-slate-200 flex flex-col font-sans relative overflow-hidden select-none">
-      
+
       {/* --- HEADER --- */}
       <header className="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900 z-10">
         <div onClick={() => setVaultOpen(true)} className="cursor-pointer active:opacity-70 flex items-center space-x-2">
@@ -203,7 +211,7 @@ export default function App() {
 
       {/* --- MAIN CONTENT AREA --- */}
       <main className="flex-1 overflow-y-auto overflow-x-hidden relative" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-        
+
         {/* --- MODE A: STRATEGY DASHBOARD (HOME) --- */}
         {activeTab === 'home' && (
           <div className="p-4 space-y-6 pb-24">
@@ -244,13 +252,13 @@ export default function App() {
                 <div className="border-l-2 border-pink-500 pl-4 relative">
                   <div className="absolute w-2 h-2 bg-pink-500 rounded-full -left-[5px] top-1"></div>
                   <span className="text-xs font-bold text-pink-500 uppercase">Now</span>
-                  {nowTasks.length === 0 ? <p className="text-xs text-slate-500 italic mt-1">No high priority goals.</p> : 
+                  {nowTasks.length === 0 ? <p className="text-xs text-slate-500 italic mt-1">No high priority goals.</p> :
                     nowTasks.map(t => <p key={t.id} className="text-sm text-slate-200 mt-1">{t.title}</p>)}
                 </div>
                 <div className="border-l-2 border-purple-500 pl-4 relative">
                   <div className="absolute w-2 h-2 bg-purple-500 rounded-full -left-[5px] top-1"></div>
                   <span className="text-xs font-bold text-purple-400 uppercase">Next</span>
-                  {nextTasks.length === 0 ? <p className="text-xs text-slate-500 italic mt-1">Empty queue.</p> : 
+                  {nextTasks.length === 0 ? <p className="text-xs text-slate-500 italic mt-1">Empty queue.</p> :
                     nextTasks.map(t => <p key={t.id} className="text-sm text-slate-400 mt-1">{t.title}</p>)}
                 </div>
               </div>
@@ -260,12 +268,10 @@ export default function App() {
             <section className="space-y-2">
               <div className="flex justify-between items-center">
                 <h3 className="text-cyan-400 text-xs font-bold uppercase tracking-widest flex items-center"><CheckCircle2 className="w-4 h-4 mr-1"/> Devlog</h3>
-                
-                {/* Test Button for Confetti Modal */}
-                <button 
-                  id="hs-run-on-click-run-confetti" 
-                  onClick={() => { setConfetti(true); setTimeout(() => setConfetti(false), 2500); }}
-                  className="py-1 px-3 inline-flex items-center gap-x-2 text-[10px] font-bold uppercase tracking-wider rounded-lg bg-pink-600 border border-pink-500 text-white hover:bg-pink-500 focus:outline-none transition-colors" 
+
+                <button
+                  onClick={fireConfetti}
+                  className="py-1 px-3 inline-flex items-center gap-x-2 text-[10px] font-bold uppercase tracking-wider rounded-lg bg-pink-600 border border-pink-500 text-white hover:bg-pink-500 focus:outline-none transition-colors"
                   type="button"
                 >
                   Run Confetti
@@ -303,7 +309,7 @@ export default function App() {
             <div className="flex-1 relative flex">
               {/* Left "Peek" Mechanic for backward navigation */}
               {activeColIndex > 0 && (
-                <div 
+                <div
                   className="w-[15px] h-full bg-gradient-to-r from-slate-800/80 to-transparent border-r border-slate-700/50 flex flex-col justify-center items-center cursor-pointer backdrop-blur-sm"
                   onClick={() => setActiveColIndex(c => c - 1)}
                 >
@@ -312,7 +318,7 @@ export default function App() {
               )}
 
               <div className="flex-1 px-4 pb-32 overflow-y-auto space-y-3">
-                
+
                 {/* Ghost Entry for "To Sort" */}
                 {COLUMNS[activeColIndex] === 'To Sort' && (
                   <button onClick={() => setQuickNoteOpen(true)} className="w-full border-2 border-dashed border-slate-700 rounded-2xl p-4 text-slate-400 flex items-center justify-center space-x-2 hover:bg-slate-800 hover:border-amber-500 transition-colors">
@@ -328,10 +334,10 @@ export default function App() {
                     <p className="text-sm font-bold">Zone Clear</p>
                   </div>
                 )}
-                
+
                 {activeTasks.map(task => (
-                  <div 
-                    key={task.id} 
+                  <div
+                    key={task.id}
                     onTouchStart={() => handleLongPressStart(task)}
                     onTouchEnd={handleLongPressEnd}
                     onContextMenu={(e) => { e.preventDefault(); openWizard(task); }} // Desktop fallback
@@ -339,7 +345,7 @@ export default function App() {
                   >
                     {/* Color indicator accent */}
                     <div className={`absolute left-0 top-0 bottom-0 w-1 ${getGaugeColor(task.column)}`}></div>
-                    
+
                     <div className="flex justify-between items-start mb-3 pl-2">
                       <div>
                         <h3 className="font-bold text-slate-100">{task.title}</h3>
@@ -349,7 +355,7 @@ export default function App() {
                           </div>
                         )}
                       </div>
-                      
+
                       {COLUMNS[activeColIndex] !== 'To Sort' ? (
                         <button onClick={() => completeTask(task.id)} className="w-7 h-7 shrink-0 rounded-full border-2 border-slate-700 flex items-center justify-center hover:bg-cyan-500 hover:border-cyan-400 transition-colors group ml-3">
                           <CheckCircle2 className="w-4 h-4 text-transparent group-hover:text-white" />
@@ -358,7 +364,7 @@ export default function App() {
                         <button onClick={() => openWizard(task)} className="text-[10px] bg-amber-500/20 text-amber-500 font-bold border border-amber-500/50 px-2 py-1 rounded ml-3 shrink-0">Prioritize</button>
                       )}
                     </div>
-                    
+
                     <div className="flex space-x-2 text-xs pl-2">
                       <span className="bg-slate-950 text-cyan-400 px-2 py-1 rounded border border-slate-800 font-bold flex items-center">
                         RICE: {calculateScore(task.reach, task.impact, task.confidence, task.effort)}
@@ -373,7 +379,7 @@ export default function App() {
 
               {/* The "Peek" Mechanic */}
               {activeColIndex < COLUMNS.length - 1 && (
-                <div 
+                <div
                   className="w-[15px] h-full bg-gradient-to-l from-slate-800/80 to-transparent border-l border-slate-700/50 flex flex-col justify-center items-center cursor-pointer backdrop-blur-sm"
                   onClick={() => setActiveColIndex(c => c + 1)}
                 >
@@ -394,8 +400,8 @@ export default function App() {
 
         {/* Central Raised Dock Button */}
         <div className="relative -top-6">
-          <button 
-            onClick={() => setGlobalMenuOpen(!globalMenuOpen)} 
+          <button
+            onClick={() => setGlobalMenuOpen(!globalMenuOpen)}
             className={`w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl shadow-lg border-4 border-slate-950 transition-all duration-300 ${globalMenuOpen ? 'bg-slate-700 rotate-45' : 'bg-gradient-to-br from-pink-500 to-violet-600 shadow-pink-500/30 active:scale-95'}`}
           >
             {globalMenuOpen ? <X /> : <Plus />}
@@ -435,9 +441,9 @@ export default function App() {
             <h2 className="text-xl font-bold text-amber-500 flex items-center"><Zap className="mr-2"/> Brain Dump</h2>
             <button onClick={() => setQuickNoteOpen(false)} className="text-slate-400 p-2"><X /></button>
           </div>
-          <textarea 
+          <textarea
             autoFocus
-            placeholder="Dump your idea here. We'll sort it later..." 
+            placeholder="Dump your idea here. We'll sort it later..."
             value={quickNoteText}
             onChange={(e) => setQuickNoteText(e.target.value)}
             className="w-full flex-1 bg-slate-900 border border-slate-800 rounded-2xl p-4 text-white outline-none focus:border-amber-500 resize-none"
@@ -501,10 +507,10 @@ export default function App() {
           </div>
 
           <div className="flex-1 overflow-y-auto space-y-6 pb-24 hide-scrollbar px-2">
-            
+
             {/* Goal Input & Quick Tags */}
             <div className="space-y-3">
-              <input 
+              <input
                 type="text" placeholder="Goal Name..." value={wizardForm.title} onChange={e => setWizardForm({...wizardForm, title: e.target.value})}
                 className="w-full bg-transparent border-b-2 border-slate-700 focus:border-pink-500 outline-none py-2 text-2xl font-bold text-white transition-colors"
               />
@@ -514,19 +520,19 @@ export default function App() {
                     + {tag}
                   </button>
                 ))}
-                
+
                 {/* Custom Tags */}
                 {wizardForm.tags.filter(t => !QUICK_TAGS.includes(t)).map(tag => (
                   <button key={tag} onClick={() => toggleTag(tag)} className="text-[10px] px-2 py-1 rounded-full border bg-pink-500 border-pink-500 text-white transition-colors">
                     {tag} ×
                   </button>
                 ))}
-                
+
                 {/* Add Custom Tag Input */}
                 <div className="flex items-center space-x-1 ml-1">
-                  <input 
-                    type="text" 
-                    placeholder="Custom tag..." 
+                  <input
+                    type="text"
+                    placeholder="Custom tag..."
                     value={customTagInput}
                     onChange={(e) => setCustomTagInput(e.target.value)}
                     onKeyDown={(e) => {
@@ -541,7 +547,7 @@ export default function App() {
                     className="bg-transparent border-b border-slate-700 text-[10px] text-slate-300 outline-none focus:border-pink-500 w-20 px-1 py-0.5 placeholder:text-slate-600"
                   />
                   {customTagInput.trim() && (
-                    <button 
+                    <button
                       onClick={() => {
                         if (!wizardForm.tags.includes(customTagInput.trim())) {
                           toggleTag(customTagInput.trim());
@@ -581,7 +587,7 @@ export default function App() {
               <label className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-2 block">MoSCoW Filter (Overrides RICE)</label>
               <div className="flex bg-slate-900 rounded-xl p-1 border border-slate-800">
                 {['Must', 'Should', 'Could', "Won't"].map(m => (
-                  <button 
+                  <button
                     key={m} onClick={() => setWizardForm({...wizardForm, moscow: m})}
                     className={`flex-1 py-3 text-xs font-bold rounded-lg transition-all ${wizardForm.moscow === m ? (m === 'Must' ? 'bg-pink-600 text-white' : m === "Won't" ? 'bg-slate-700 text-slate-300' : 'bg-slate-800 text-white shadow-md') : 'text-slate-500 hover:text-slate-300'}`}
                   >
@@ -599,7 +605,7 @@ export default function App() {
                   <HelpCircle className="w-3.5 h-3.5" />
                 </button>
               </div>
-              
+
               {wizardForm.infoOpen === 'fibonacci' && (
                 <div className="mb-2 text-[10px] text-slate-300 bg-slate-800 p-3 rounded-lg border border-slate-700 relative">
                   <div className="absolute -top-1 left-[150px] w-2 h-2 bg-slate-800 border-t border-l border-slate-700 transform rotate-45"></div>
@@ -619,7 +625,7 @@ export default function App() {
                     </div>
                     <span className="text-cyan-400 font-black text-lg">{wizardForm[metric]}</span>
                   </div>
-                  
+
                   {wizardForm.infoOpen === metric && (
                     <div className="mb-4 text-[10px] text-slate-300 bg-slate-800 p-3 rounded-lg border border-slate-700 relative">
                       <div className="absolute -top-1 left-20 w-2 h-2 bg-slate-800 border-t border-l border-slate-700 transform rotate-45"></div>
@@ -630,7 +636,7 @@ export default function App() {
 
                   <div className="flex justify-between relative before:absolute before:top-1/2 before:left-4 before:right-4 before:h-0.5 before:bg-slate-800 before:-z-0">
                     {FIBONACCI.map(val => (
-                      <button 
+                      <button
                         key={val} onClick={() => setWizardForm({...wizardForm, [metric]: val})}
                         className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${wizardForm[metric] === val ? 'bg-cyan-500 text-slate-950 scale-110 shadow-[0_0_15px_rgba(6,182,212,0.5)]' : 'bg-slate-900 border-2 border-slate-700 text-slate-400 hover:border-slate-500'}`}
                       >
@@ -652,26 +658,12 @@ export default function App() {
         </div>
       )}
 
-      {/* --- CONFETTI MODAL --- */}
-      {confetti && (
-        <div className="absolute inset-0 z-[100] flex items-center justify-center bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-300 px-4">
-          <div className="bg-slate-900/90 border border-pink-500 rounded-3xl p-10 shadow-[0_0_60px_rgba(236,72,153,0.4)] flex flex-col items-center animate-in zoom-in-95 duration-300 relative overflow-hidden w-full max-w-sm">
-            {/* Confetti Particles */}
-            <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-              <div className="absolute text-4xl animate-ping opacity-75">🎉</div>
-              <div className="absolute text-3xl translate-y-24 translate-x-16 animate-bounce">✨</div>
-              <div className="absolute text-3xl translate-y-16 -translate-x-20 animate-bounce delay-100">🚀</div>
-              <div className="absolute text-3xl translate-y-16 -translate-x-12 animate-bounce delay-200">🔥</div>
-              <div className="absolute text-3xl translate-y-20 translate-x-16 animate-bounce delay-300">⭐</div>
-            </div>
-            
-            <div className="relative z-10 flex flex-col items-center">
-              <div className="absolute text-7xl animate-bounce mb-6">🎉</div>
-              <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-400 text-center">
-                Goal Crushed!
-              </h2>
-              <p className="text-slate-300 mt-3 font-bold text-center">Momentum increased.</p>
-            </div>
+      {/* --- GOAL CRUSHED TOAST --- */}
+      {goalToast && (
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 z-[100] animate-in fade-in slide-in-from-top-4 duration-300 pointer-events-none">
+          <div className="bg-slate-900 border border-pink-500 rounded-2xl px-6 py-3 shadow-[0_0_30px_rgba(236,72,153,0.35)] flex items-center space-x-3">
+            <span className="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Goal Crushed!</span>
+            <span className="text-xs text-slate-400 font-bold">Momentum increased.</span>
           </div>
         </div>
       )}
