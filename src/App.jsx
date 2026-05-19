@@ -268,6 +268,7 @@ export default function App() {
             <section className="space-y-2">
               <div className="flex justify-between items-center">
                 <h3 className="text-purple-400 text-xs font-bold uppercase tracking-widest flex items-center"><CheckCircle2 className="w-4 h-4 mr-1"/> Devlog</h3>
+              </div>
 
               <div className="space-y-2">
                 {completedTasks.length === 0 && <p className="text-sm text-slate-500 italic p-4 bg-slate-900 rounded-xl border border-slate-800 text-center">No confetti moments yet.</p>}
