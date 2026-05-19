@@ -267,7 +267,7 @@ export default function App() {
             {/* Devlog (Recent Wins) */}
             <section className="space-y-2">
               <div className="flex justify-between items-center">
-                <h3 className="text-cyan-400 text-xs font-bold uppercase tracking-widest flex items-center"><CheckCircle2 className="w-4 h-4 mr-1"/> Devlog</h3>
+                <h3 className="text-purple-400 text-xs font-bold uppercase tracking-widest flex items-center"><CheckCircle2 className="w-4 h-4 mr-1"/> Devlog</h3>
 
                 <button
                   onClick={fireConfetti}
