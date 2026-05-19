@@ -509,7 +509,7 @@ export default function App() {
               <div className="flex flex-wrap gap-2 items-center">
 
               <div>
-              <label className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-2 block">MoSCoW Filter (Overrides RICE)</label>
+              <label className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-2 block">Quick Tabs</label>
                 {QUICK_TAGS.map(tag => (
                   <button key={tag} onClick={() => toggleTag(tag)} className={`text-[10px] px-2 py-1 rounded-full border transition-colors ${wizardForm.tags.includes(tag) ? 'bg-pink-500 border-pink-500 text-white' : 'bg-slate-900 border-slate-700 text-slate-400 hover:border-slate-500'}`}>
                     + {tag}
