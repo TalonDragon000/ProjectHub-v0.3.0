@@ -25,15 +25,14 @@ const RICE_HINTS = {
   }
 };
 
-// --- DEMO Project ---
 const INITIAL_PROJECTS = [
-  { id: 1, name: 'Demo Project', mission: 'This is a sample project for you to explore.' }
+  { id: 1, name: 'Web3 MMORPG', mission: 'Build the core battle loop for beta launch.' }
 ];
 
 const INITIAL_TASKS = [
-  { id: 1, projectId: 1, title: 'Swipe left or right to switch priority columns', reach: 5, impact: 8, confidence: 5, effort: 3, moscow: 'Must', column: 'High', completed: false, tags: ['Navigation'] },
-  { id: 2, projectId: 1, title: 'Long-press to re-prioritize', reach: 8, impact: 5, confidence: 8, effort: 5, moscow: 'Should', column: 'Med', completed: false, tags: ['Organization'] },
-  { id: 3, projectId: 1, title: 'Complete task to archive', reach: 8, impact: 3, confidence: 3, effort: 8, moscow: 'Could', column: 'Low', completed: false, tags: ['Logs'] },
+  { id: 1, projectId: 1, title: 'Setup Authentication', reach: 5, impact: 8, confidence: 5, effort: 3, moscow: 'Must', column: 'High', completed: false, tags: ['Core Feature'] },
+  { id: 2, projectId: 1, title: 'Design Landing Page', reach: 8, impact: 5, confidence: 8, effort: 5, moscow: 'Should', column: 'Med', completed: false, tags: ['Marketing'] },
+  { id: 3, projectId: 1, title: 'Refactor State Management', reach: 8, impact: 3, confidence: 3, effort: 8, moscow: 'Could', column: 'Low', completed: false, tags: ['Maintenance'] },
 ];
 
 const fireConfetti = () => {
