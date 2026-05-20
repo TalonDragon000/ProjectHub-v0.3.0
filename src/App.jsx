@@ -273,7 +273,7 @@ export default function App() {
               <div className="space-y-2">
                 {completedTasks.length === 0 && <div className="text-sm text-slate-500 italic p-4 bg-slate-900 rounded-xl border border-slate-800 text-center">
                   <p>Devlog Empty.</p>
-                <span className="text-[10px] not-italic font-bold">Complete a task to start the list.</span></div>}
+                <span className="text-[10px] not-italic">(Complete a task to start the list.)</span></div>}
                 {completedTasks.slice().reverse().map(t => (
                   <div key={t.id} className="p-3 bg-slate-900 rounded-xl border border-slate-800 flex justify-between items-center opacity-60">
                     <span className="line-through text-slate-400 text-sm">{t.title}</span>
