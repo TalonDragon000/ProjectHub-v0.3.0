@@ -506,7 +506,7 @@ export default function App() {
                 type="text" placeholder="Goal Name..." value={wizardForm.title} onChange={e => setWizardForm({...wizardForm, title: e.target.value})}
                 className="w-full bg-transparent border-b-2 border-slate-700 focus:border-pink-500 outline-none py-2 text-2xl font-bold text-white transition-colors"
               />
-              <div className="flex flex-wrap gap-2 items-center">
+              <div className="flex flex-wrap gap-3 items-center">
 
               <div>
               <label className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-2 block">Quick Tabs</label>
