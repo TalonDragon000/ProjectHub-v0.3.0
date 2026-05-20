@@ -4,7 +4,7 @@ import { Home, LayoutList, Plus, CircleHelp as HelpCircle, X, Target, Briefcase,
 // --- INITIAL DATA & CONFIG ---
 const COLUMNS = ['High', 'Med', 'Low', 'Later', 'To Sort'];
 const FIBONACCI = [1, 2, 3, 5, 8];
-const QUICK_TAGS = ['Marketing', 'Engagement', 'Maintenance', 'Core Feature', 'Bug Fix'];
+const QUICK_TAGS = ['Marketing', 'Engagement', 'Maintenance', 'Feature', 'Bug Fix'];
 
 const RICE_HINTS = {
   reach: {
@@ -38,8 +38,7 @@ const INITIAL_TASKS = [
 const fireConfetti = () => {
   if (typeof window.confetti !== 'function') return;
   const colors = ['#ec4899', '#06b6d4', '#a855f7', '#f59e0b', '#10b981'];
-  window.confetti({ particleCount: 80, spread: 70, origin: { x: 0.3, y: 0.6 }, colors });
-  window.confetti({ particleCount: 80, spread: 70, origin: { x: 0.7, y: 0.6 }, colors });
+  window.confetti({ particleCount: 80, spread: 70, origin: { x: 0.5, y: 0.5 }, colors });
 };
 
 export default function App() {
@@ -271,7 +270,9 @@ export default function App() {
               </div>
 
               <div className="space-y-2">
-                {completedTasks.length === 0 && <p className="text-sm text-slate-500 italic p-4 bg-slate-900 rounded-xl border border-slate-800 text-center">No confetti moments yet.</p>}
+                {completedTasks.length === 0 && <div className="text-sm text-slate-500 italic p-4 bg-slate-900 rounded-xl border border-slate-800 text-center">
+                  <p>Devlog Empty.</p>
+                <span className="text-[10px] not-italic">( Complete a task to start the list. )</span></div>}
                 {completedTasks.slice().reverse().map(t => (
                   <div key={t.id} className="p-3 bg-slate-900 rounded-xl border border-slate-800 flex justify-between items-center opacity-60">
                     <span className="line-through text-slate-400 text-sm">{t.title}</span>
@@ -507,8 +508,11 @@ export default function App() {
                 className="w-full bg-transparent border-b-2 border-slate-700 focus:border-pink-500 outline-none py-2 text-2xl font-bold text-white transition-colors"
               />
               <div className="flex flex-wrap gap-2 items-center">
+
+              <div>
+              <label className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1 px-1 block">Quick Tags</label>
                 {QUICK_TAGS.map(tag => (
-                  <button key={tag} onClick={() => toggleTag(tag)} className={`text-[10px] px-2 py-1 rounded-full border transition-colors ${wizardForm.tags.includes(tag) ? 'bg-pink-500 border-pink-500 text-white' : 'bg-slate-900 border-slate-700 text-slate-400 hover:border-slate-500'}`}>
+                  <button key={tag} onClick={() => toggleTag(tag)} className={`text-[10px] px-2 py-1 mx-0.5 rounded-full border transition-colors ${wizardForm.tags.includes(tag) ? 'bg-pink-500 border-pink-500 text-white' : 'bg-slate-900 border-slate-700 text-slate-400 hover:border-slate-500'}`}>
                     + {tag}
                   </button>
                 ))}
@@ -516,12 +520,12 @@ export default function App() {
                 {/* Custom Tags */}
                 {wizardForm.tags.filter(t => !QUICK_TAGS.includes(t)).map(tag => (
                   <button key={tag} onClick={() => toggleTag(tag)} className="text-[10px] px-2 py-1 rounded-full border bg-pink-500 border-pink-500 text-white transition-colors">
-                    {tag} ×
+                    + {tag} ×
                   </button>
                 ))}
 
                 {/* Add Custom Tag Input */}
-                <div className="flex items-center space-x-1 ml-1">
+                <div className="flex items-center space-x-1 ml-1 my-2">
                   <input
                     type="text"
                     placeholder="Custom tag..."
@@ -551,6 +555,7 @@ export default function App() {
                       Add
                     </button>
                   )}
+                </div>
                 </div>
               </div>
             </div>
