@@ -39,7 +39,6 @@ const fireConfetti = () => {
   if (typeof window.confetti !== 'function') return;
   const colors = ['#ec4899', '#06b6d4', '#a855f7', '#f59e0b', '#10b981'];
   window.confetti({ particleCount: 80, spread: 70, origin: { x: 0.3, y: 0.6 }, colors });
-  window.confetti({ particleCount: 80, spread: 70, origin: { x: 0.7, y: 0.6 }, colors });
 };
 
 export default function App() {
