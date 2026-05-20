@@ -272,7 +272,7 @@ export default function App() {
 
               <div className="space-y-2">
                 {completedTasks.length === 0 && 
-                  <span className="text-sm text-slate-500 italic p-4 bg-slate-900 rounded-xl border border-slate-800 text-center">Devlog empty.</span>, 
+                  <span className="text-sm text-slate-500 italic p-4 bg-slate-900 rounded-xl border border-slate-800 text-center"><p>Devlog Empty.</p></span>, 
                   <span className="text-sm text-slate-500 italic p-4 bg-slate-900 rounded-xl border border-slate-800 text-center">Devlog empty.</span>}
                 {completedTasks.slice().reverse().map(t => (
                   <div key={t.id} className="p-3 bg-slate-900 rounded-xl border border-slate-800 flex justify-between items-center opacity-60">
