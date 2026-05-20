@@ -103,8 +103,8 @@ All data is currently managed in React component state. Supabase integration is 
 
 1. **Clone and Install Dependencies:**
     ```bash
-    git clone https://github.com/TalonDragon000/project-hub.git
-    cd project-hub
+    git clone https://github.com/TalonDragon000/ProjectHub-v0.2.0.git
+    cd ProjectHub-v0.2.0
     npm install
     ```
 
