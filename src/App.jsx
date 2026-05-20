@@ -524,7 +524,7 @@ export default function App() {
                 ))}
 
                 {/* Add Custom Tag Input */}
-                <div className="flex items-center space-x-1 ml-1">
+                <div className="flex items-center space-x-1 ml-1 my-1">
                   <input
                     type="text"
                     placeholder="Custom tag..."
