@@ -4,7 +4,7 @@ import { Home, LayoutList, Plus, CircleHelp as HelpCircle, X, Target, Briefcase,
 // --- INITIAL DATA & CONFIG ---
 const COLUMNS = ['High', 'Med', 'Low', 'Later', 'To Sort'];
 const FIBONACCI = [1, 2, 3, 5, 8];
-const QUICK_TAGS = ['Marketing', 'Engagement', 'Maintenance', 'Core Feature', 'Bug Fix'];
+const QUICK_TAGS = ['Marketing', 'Engagement', 'Maintenance', 'Feature', 'Bug Fix'];
 
 const RICE_HINTS = {
   reach: {
