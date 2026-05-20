@@ -271,7 +271,8 @@ export default function App() {
               </div>
 
               <div className="space-y-2">
-                {completedTasks.length === 0 && <p className="text-sm text-slate-500 italic p-4 bg-slate-900 rounded-xl border border-slate-800 text-center">Devlog empty.</p>}
+                {completedTasks.length === 0 && <p className="text-sm text-slate-500 italic p-4 bg-slate-900 rounded-xl border border-slate-800 text-center">Devlog empty.
+                Complete a task to archive.</p>}
                 {completedTasks.slice().reverse().map(t => (
                   <div key={t.id} className="p-3 bg-slate-900 rounded-xl border border-slate-800 flex justify-between items-center opacity-60">
                     <span className="line-through text-slate-400 text-sm">{t.title}</span>
