@@ -6,89 +6,42 @@
    ============================================================ */
 
 :root {
-  /* --- Backgrounds --- */
-  --bg-base:    #020617; /* slate-950 */
-  --bg-surface: #0f172a; /* slate-900 */
-  --bg-raised:  #1e293b; /* slate-800 */
-  --bg-overlay: #334155; /* slate-700 */
+  /* --- Backgrounds (RGB) --- */
+  --bg-base:    2 6 23;    /* slate-950 */
+  --bg-surface: 15 23 42;  /* slate-900 */
+  --bg-raised:  30 41 59;  /* slate-800 */
+  --bg-overlay: 51 65 85;  /* slate-700 */
 
-  /* --- Borders --- */
-  --border-subtle:  #1e293b; /* slate-800 */
-  --border-default: #334155; /* slate-700 */
-  --border-strong:  #475569; /* slate-600 */
+  /* --- Borders (RGB) --- */
+  --border-subtle:  30 41 59; /* slate-800 */
+  --border-default: 51 65 85; /* slate-700 */
+  --border-strong:  71 85 105; /* slate-600 */
 
-  /* --- Text --- */
-  --text-primary:   #e2e8f0; /* slate-200 */
-  --text-secondary: #cbd5e1; /* slate-300 */
-  --text-muted:     #94a3b8; /* slate-400 */
-  --text-faint:     #64748b; /* slate-500 */
-  --text-inverted:  #020617; /* slate-950 */
+  /* --- Text (RGB) --- */
+  --text-primary:   226 232 240; /* slate-200 */
+  --text-secondary: 203 213 225; /* slate-300 */
+  --text-muted:     148 163 184; /* slate-400 */
+  --text-faint:     100 116 139; /* slate-500 */
+  --text-inverted:  2 6 23;      /* slate-950 */
 
-  /* --- Accent Primary (Pink) --- */
-  --accent-primary:        #ec4899; /* pink-500 */
-  --accent-primary-dark:   #db2777; /* pink-600 */
-  --accent-primary-text:   #f472b6; /* pink-400 */
-  --accent-primary-border: #ec4899; /* pink-500 */
-  --accent-primary-bg-dim: rgba(236, 72, 153, 0.3); /* pink-900/30 */
-  --accent-primary-shadow: rgba(236, 72, 153, 0.30);
-  --accent-primary-toast-shadow: rgba(236, 72, 153, 0.35);
+  /* --- Accents (RGB) --- */
+  --accent-primary:   236 72 153; /* pink-500 */
+  --accent-secondary: 6 182 212;  /* cyan-500 */
+  --accent-tertiary:  124 58 237; /* violet-600 */
+  --accent-amber:     217 119 6;  /* amber-600 */
 
-  /* --- Accent Secondary (Cyan) --- */
-  --accent-secondary:        #06b6d4; /* cyan-500 */
-  --accent-secondary-text:   #22d3ee; /* cyan-400 */
-  --accent-secondary-border: #22d3ee; /* cyan-400 */
-  --accent-secondary-shadow: rgba(6, 182, 212, 0.5);
-  --accent-secondary-bg-dim: rgba(6, 182, 212, 0.2);
+  /* --- Priorities (RGB) --- */
+  --priority-high:  236 72 153; /* pink-500 */
+  --priority-med:   168 85 247; /* purple-500 */
+  --priority-low:   99 102 241; /* indigo-500 */
+  --priority-later: 107 114 128; /* gray-500 */
 
-  /* --- Accent Tertiary (Violet) --- */
-  --accent-tertiary:        #7c3aed; /* violet-600 */
-  --accent-tertiary-alt:    #a78bfa; /* violet-400 */
-  --accent-tertiary-text:   #a78bfa; /* violet-400 */
-  --accent-tertiary-text-2: #8b5cf6; /* violet-500 */
-  --accent-tertiary-border: #8b5cf6; /* violet-500 */
-  --accent-tertiary-bg-dim: rgba(124, 58, 237, 0.2); /* violet-900/20 */
-
-  /* --- Accent Amber --- */
-  --accent-amber:        #d97706; /* amber-600 */
-  --accent-amber-text:   #f59e0b; /* amber-500 */
-  --accent-amber-border: #f59e0b; /* amber-500 */
-  --accent-amber-bg-dim: rgba(245, 158, 11, 0.2); /* amber-500/20 */
-  --accent-amber-border-dim: rgba(245, 158, 11, 0.5); /* amber-500/50 */
-  --accent-amber-shadow: rgba(217, 119, 6, 0.2);
-
-  /* --- Priority Colors --- */
-  --priority-high-bg:     #ec4899; /* pink-500 */
-  --priority-high-text:   #f472b6; /* pink-400 */
-  --priority-high-border: #ec4899; /* pink-500 */
-  --priority-high-bg-dim:  rgba(236, 72, 153, 0.2);
-
-  --priority-med-bg:     #a855f7; /* purple-500 */
-  --priority-med-text:   #c084fc; /* purple-400 */
-  --priority-med-border: #a855f7; /* purple-500 */
-  --priority-med-bg-dim: rgba(168, 85, 247, 0.3);
-
-  --priority-low-bg:     #6366f1; /* indigo-500 */
-  --priority-low-text:   #818cf8; /* indigo-400 */
-  --priority-low-border: #6366f1; /* indigo-500 */
-  --priority-low-bg-dim:   rgba(99, 102, 241, 0.2);
-
-  --priority-later-bg:     #6b7280; /* gray-500 */
-  --priority-later-text:   #9ca3af; /* gray-400 */
-  --priority-later-border: #6b7280; /* gray-500 */
-  --priority-later-bg-dim: rgba(107, 114, 128, 0.2);
-
-  /* --- Confetti --- */
-  --confetti-1: #ec4899; /* pink-500   */
-  --confetti-2: #06b6d4; /* cyan-400   */
-  --confetti-3: #a855f7; /* violet-500 */
-  --confetti-4: #f59e0b; /* amber-500  */
-  --confetti-5: #10b981; /* emerald-500 */
-
-  /* --- Shadows --- */
-  --shadow-nav:       rgba(0, 0, 0, 0.5);
-  --shadow-dock-btn:  rgba(236, 72, 153, 0.30);
-  --shadow-selected:  rgba(6, 182, 212, 0.5);
-  --shadow-toast:     rgba(236, 72, 153, 0.35);
+  /* --- Confetti (Hex is fine here since it's for JS, not Tailwind utility classes) --- */
+  --confetti-1: #ec4899; 
+  --confetti-2: #06b6d4; 
+  --confetti-3: #a855f7; 
+  --confetti-4: #f59e0b; 
+  --confetti-5: #10b981; 
 }
 
 
