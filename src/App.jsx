@@ -355,7 +355,7 @@ export default function App() {
                           <CheckCircle2 className="w-4 h-4 text-transparent group-hover:text-white" />
                         </button>
                       ) : (
-                        <button onClick={() => openWizard(task)} className="text-[10px] bg-accent-amber-dim text-accent-amber-text font-bold border border-accent-amber-dim px-2 py-1 rounded ml-3 shrink-0">Prioritize</button>
+                        <button onClick={() => openWizard(task)} className="text-[10px] bg-accent-amber/20 text-accent-amber-text font-bold border border-accent-amber-dim px-2 py-1 rounded ml-3 shrink-0">Prioritize</button>
                       )}
                     </div>
 
