@@ -363,7 +363,7 @@ export default function App() {
                       <span className="bg-bg-base text-accent-secondary-text px-2 py-1 rounded border border-subtle font-bold flex items-center">
                         RICE: {calculateScore(task.reach, task.impact, task.confidence, task.effort)}
                       </span>
-                      <span className={`px-2 py-1 rounded border font-bold ${task.moscow === 'Must' ? 'bg-accent-primary-dim border-accent-primary text-accent-primary-text' : 'bg-bg-base border-subtle text-text-muted'}`}>
+                      <span className={`px-2 py-1 rounded border font-bold ${task.moscow === 'Must' ? 'bg-accent-primary/30 border-accent-primary text-accent-primary-text' : 'bg-bg-base border-subtle text-text-muted'}`}>
                         {task.moscow}
                       </span>
                     </div>
