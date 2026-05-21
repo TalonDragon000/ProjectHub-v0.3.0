@@ -8,22 +8,22 @@ export default {
     extend: {
       colors: {
         // Backgrounds & Core Board Layout
-        'bg-base':    'var(--bg-base)',
-        'bg-surface': 'var(--bg-surface)',
-        'bg-raised':  'var(--bg-raised)',
-        'bg-overlay': 'var(--bg-overlay)',
+        'base':    'var(--bg-base)',
+        'surface': 'var(--bg-surface)',
+        'raised':  'var(--bg-raised)',
+        'overlay': 'var(--bg-overlay)',
 
         // Unified Borders (Accessible via border-* and bg-*)
-        'border-subtle':  'var(--border-subtle)',
-        'border-default': 'var(--border-default)',
-        'border-strong':  'var(--border-strong)',
+        'subtle':  'var(--border-subtle)',
+        'default': 'var(--border-default)',
+        'strong':  'var(--border-strong)',
 
         // Text Tokens
-        'text-primary':   'var(--text-primary)',
-        'text-secondary': 'var(--text-secondary)',
-        'text-muted':     'var(--text-muted)',
-        'text-faint':     'var(--text-faint)',
-        'text-inverted':  'var(--text-inverted)',
+        'primary':   'var(--text-primary)',
+        'secondary': 'var(--text-secondary)',
+        'muted':     'var(--text-muted)',
+        'faint':     'var(--text-faint)',
+        'inverted':  'var(--text-inverted)',
 
         // Accent Primary (Pink)
         'accent-primary':       'var(--accent-primary)',
