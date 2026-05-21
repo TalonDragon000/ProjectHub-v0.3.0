@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "ProjectHub",
   "version": "0.2.0",
-  "description": "An intentional prioritization workspace using RICE frameworks and MoSCoW filters.",
+  "description": "A project prioritization and organization workspace using RICE frameworks and MoSCoW filters.",
   "permissions": [
     "storage"
   ],
