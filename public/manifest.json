@@ -1,25 +1,26 @@
 {
-  "manifest_version": 3,
-  "name": "ProjectHub",
-  "version": "0.2.0",
-  "description": "A project prioritization and organization workspace using RICE frameworks and MoSCoW filters.",
-  "permissions": [
-    "storage"
-  ],
-  "action": {
-    "default_popup": "index.html",
-    "default_icon": {
-      "16": "icon16.png",
-      "48": "icon48.png",
-      "128": "icon128.png"
+  "short_name": "Project Hub",
+  "name": "Project manager for solo devs",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
-  },
-  "chrome_url_overrides": {
-    "newtab": "index.html"
-  },
-  "icons": {
-    "16": "icon16.png",
-    "48": "icon48.png",
-    "128": "icon128.png"
-  }
+  ],
+  "start_url": ".",
+  "background_color": "#111827",
+  "theme_color": "#111827",
+  "display": "standalone",
+  "orientation": "portrait"
 }
