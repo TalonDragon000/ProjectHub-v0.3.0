@@ -7,11 +7,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Safe defaults
         transparent: 'transparent',
         current: 'currentColor',
 
-        // Layout
+        // Backgrounds
         base:    'rgb(var(--bg-base) / <alpha-value>)',
         surface: 'rgb(var(--bg-surface) / <alpha-value>)',
         raised:  'rgb(var(--bg-raised) / <alpha-value>)',
@@ -30,10 +29,12 @@ export default {
         inverted:  'rgb(var(--text-inverted) / <alpha-value>)',
 
         // Accents
-        'accent-primary':   'rgb(var(--accent-primary) / <alpha-value>)',
-        'accent-secondary': 'rgb(var(--accent-secondary) / <alpha-value>)',
-        'accent-tertiary':  'rgb(var(--accent-tertiary) / <alpha-value>)',
-        'accent-amber':     'rgb(var(--accent-amber) / <alpha-value>)',
+        'accent-primary':      'rgb(var(--accent-primary) / <alpha-value>)',
+        'accent-primary-dark': 'rgb(var(--accent-primary-dark) / <alpha-value>)',
+        'accent-secondary':    'rgb(var(--accent-secondary) / <alpha-value>)',
+        'accent-tertiary':     'rgb(var(--accent-tertiary) / <alpha-value>)',
+        'accent-tertiary-alt': 'rgb(var(--accent-tertiary-alt) / <alpha-value>)',
+        'accent-amber':        'rgb(var(--accent-amber) / <alpha-value>)',
 
         // Priorities
         'priority-high':  'rgb(var(--priority-high) / <alpha-value>)',
@@ -42,15 +43,14 @@ export default {
         'priority-later': 'rgb(var(--priority-later) / <alpha-value>)',
       },
       boxShadow: {
-        // Maps your custom shadows using the dynamic RGB variables
-        'nav':        '0 -10px 40px rgb(var(--bg-base) / 0.8)',
-        'dock-btn':   '0 4px 20px rgb(var(--accent-primary) / 0.4)',
-        'amber':      '0 4px 16px rgb(var(--accent-amber) / 0.3)',
-        'tertiary':   '0 4px 20px rgb(var(--accent-tertiary) / 0.3)',
-        'primary':    '0 4px 20px rgb(var(--accent-primary) / 0.4)',
-        'selected':   '0 0 15px rgb(var(--accent-secondary) / 0.5)',
-        'toast':      '0 0 30px rgb(var(--accent-primary) / 0.3)',
-      }
+        'nav':      '0 -10px 40px var(--shadow-nav)',
+        'dock-btn': '0 4px 20px var(--shadow-dock-btn)',
+        'selected': '0 0 15px var(--shadow-selected)',
+        'toast':    '0 0 30px var(--shadow-toast)',
+        'primary':  '0 4px 20px var(--shadow-primary)',
+        'amber':    '0 4px 16px var(--shadow-amber)',
+        'tertiary': '0 4px 20px var(--shadow-tertiary)',
+      },
     },
   },
   plugins: [],

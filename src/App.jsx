@@ -219,7 +219,7 @@ export default function App() {
             <section className="flex items-center space-x-4 p-4 bg-surface rounded-2xl border border-subtle shadow-lg">
               <div className="relative w-16 h-16 flex-shrink-0">
                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                  <path className="text-bg-raised" strokeWidth="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                  <path className="text-raised" strokeWidth="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                   <path className="text-accent-secondary" strokeDasharray={`${(completedTasks.length / (projectTasks.length || 1)) * 100}, 100`} strokeWidth="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-accent-secondary">
@@ -304,7 +304,7 @@ export default function App() {
               {/* Left "Peek" Mechanic for backward navigation */}
               {activeColIndex > 0 && (
                 <div
-                  className="w-[15px] h-full bg-gradient-to-r from-bg-raised/80 to-transparent border-r border-default/50 flex flex-col justify-center items-center cursor-pointer backdrop-blur-sm"
+                  className="w-[15px] h-full bg-gradient-to-r from-raised/80 to-transparent border-r border-default/50 flex flex-col justify-center items-center cursor-pointer backdrop-blur-sm"
                   onClick={() => setActiveColIndex(c => c - 1)}
                 >
                   <ChevronLeft className="text-faint/50 w-3 h-3 -mr-1" />
@@ -355,7 +355,7 @@ export default function App() {
                           <CheckCircle2 className="w-4 h-4 text-transparent group-hover:text-white" />
                         </button>
                       ) : (
-                        <button onClick={() => openWizard(task)} className="text-[10px] bg-accent-amber/20 text-accent-amber font-bold border border-accent-amber-dim px-2 py-1 rounded ml-3 shrink-0">Prioritize</button>
+                        <button onClick={() => openWizard(task)} className="text-[10px] bg-accent-amber/20 text-accent-amber font-bold border border-accent-amber/50 px-2 py-1 rounded ml-3 shrink-0">Prioritize</button>
                       )}
                     </div>
 
@@ -374,7 +374,7 @@ export default function App() {
               {/* The "Peek" Mechanic */}
               {activeColIndex < COLUMNS.length - 1 && (
                 <div
-                  className="w-[15px] h-full bg-gradient-to-l from-bg-raised/80 to-transparent border-l border-default/50 flex flex-col justify-center items-center cursor-pointer backdrop-blur-sm"
+                  className="w-[15px] h-full bg-gradient-to-l from-raised/80 to-transparent border-l border-default/50 flex flex-col justify-center items-center cursor-pointer backdrop-blur-sm"
                   onClick={() => setActiveColIndex(c => c + 1)}
                 >
                   <ChevronRight className="text-faint/50 w-3 h-3 -ml-1" />
@@ -386,7 +386,7 @@ export default function App() {
       </main>
 
       {/* --- BOTTOM NAVIGATION DOCK --- */}
-      <nav className="absolute bottom-0 w-full bg-surface border-t border-subtle pb-safe pt-2 px-8 flex justify-between items-center z-20" style={{ boxShadow: `0 -10px 40px var(--shadow-nav)` }}>
+      <nav className="absolute bottom-0 w-full bg-surface border-t border-subtle pb-safe pt-2 px-8 flex justify-between items-center z-20 shadow-nav">
         <button onClick={() => {setActiveTab('home'); setGlobalMenuOpen(false);}} className={`flex flex-col items-center p-2 transition-colors ${activeTab === 'home' ? 'text-accent-secondary' : 'text-faint'}`}>
           <Home className="w-6 h-6 mb-1" />
           <span className="text-[9px] uppercase font-bold tracking-widest">Home</span>
@@ -396,8 +396,7 @@ export default function App() {
         <div className="relative -top-6">
           <button
             onClick={() => setGlobalMenuOpen(!globalMenuOpen)}
-            className={`w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl border-4 border-bg-base transition-all duration-300 ${globalMenuOpen ? 'bg-overlay rotate-45 shadow-lg' : 'bg-gradient-to-br from-accent-primary to-accent-tertiary active:scale-95'}`}
-            style={{ boxShadow: globalMenuOpen ? undefined : `0 4px 20px var(--shadow-dock-btn)` }}
+            className={`w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl border-4 border-base transition-all duration-300 ${globalMenuOpen ? 'bg-overlay rotate-45 shadow-lg' : 'bg-gradient-to-br from-accent-primary to-accent-tertiary shadow-dock-btn active:scale-95'}`}
           >
             {globalMenuOpen ? <X /> : <Plus />}
           </button>
@@ -443,7 +442,7 @@ export default function App() {
             onChange={(e) => setQuickNoteText(e.target.value)}
             className="w-full flex-1 bg-surface border border-subtle rounded-2xl p-4 text-white outline-none focus:border-accent-amber resize-none"
           ></textarea>
-          <button onClick={saveQuickNote} className="w-full bg-accent-amber text-white font-bold py-4 rounded-xl mt-6 shadow-lg active:scale-95" style={{ boxShadow: `0 4px 16px var(--accent-amber-shadow)` }}>
+          <button onClick={saveQuickNote} className="w-full bg-accent-amber text-white font-bold py-4 rounded-xl mt-6 shadow-amber active:scale-95">
             Send to "To Sort"
           </button>
         </div>
@@ -465,7 +464,7 @@ export default function App() {
               <label className="text-xs font-bold text-faint uppercase tracking-widest ml-1 mb-1 block">Core Mission (One sentence)</label>
               <input type="text" value={projectForm.mission} onChange={e => setProjectForm({...projectForm, mission: e.target.value})} placeholder="Why are we building this?" className="w-full bg-surface border-b-2 border-default focus:border-accent-tertiary outline-none px-3 py-4 text-lg text-white rounded-t-xl transition-colors"/>
             </div>
-            <button onClick={createProject} className="w-full bg-accent-tertiary text-white font-bold py-4 rounded-xl mt-8 active:scale-95 transition-transform" style={{ boxShadow: `0 4px 20px var(--accent-tertiary-bg-dim)` }}>
+            <button onClick={createProject} className="w-full bg-accent-tertiary text-white font-bold py-4 rounded-xl mt-8 shadow-tertiary active:scale-95 transition-transform">
               Start Building
             </button>
             {projects.length > 0 && (
@@ -588,7 +587,7 @@ export default function App() {
                 {['Must', 'Should', 'Could', "Won't"].map(m => (
                   <button
                     key={m} onClick={() => setWizardForm({...wizardForm, moscow: m})}
-                    className={`flex-1 py-3 text-xs font-bold rounded-lg transition-all ${wizardForm.moscow === m ? (m === 'Must' ? 'bg-accent-primary-dark text-white' : m === "Won't" ? 'bg-overlay text-secondary' : 'bg-raised text-white shadow-md') : 'text-faint hover:text-secondary'}`}
+                    className={`flex-1 py-3 text-xs font-bold rounded-lg transition-all ${wizardForm.moscow === m ? (m === 'Must' ? 'bg-accent-primary/80 text-white' : m === "Won't" ? 'bg-overlay text-secondary' : 'bg-raised text-white shadow-md') : 'text-faint hover:text-secondary'}`}
                   >
                     {m}
                   </button>
@@ -637,8 +636,7 @@ export default function App() {
                     {FIBONACCI.map(val => (
                       <button
                         key={val} onClick={() => setWizardForm({...wizardForm, [metric]: val})}
-                        className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${wizardForm[metric] === val ? 'bg-accent-secondary text-inverted scale-110' : 'bg-surface border-2 border-default text-muted hover:border-strong'}`}
-                        style={wizardForm[metric] === val ? { boxShadow: `0 0 15px var(--shadow-selected)` } : undefined}
+                        className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${wizardForm[metric] === val ? 'bg-accent-secondary text-inverted scale-110 shadow-selected' : 'bg-surface border-2 border-default text-muted hover:border-strong'}`}
                       >
                         {val}
                       </button>
@@ -651,7 +649,7 @@ export default function App() {
 
           {/* Sticky Save Button */}
           <div className="pt-4 bg-base border-t border-subtle absolute bottom-0 left-0 w-full px-4 pb-safe-bottom z-50">
-            <button onClick={saveWizard} className="w-full bg-gradient-to-r from-accent-primary to-accent-tertiary text-white font-black text-lg py-4 rounded-2xl active:scale-95 transition-transform mb-4" style={{ boxShadow: `0 4px 20px var(--accent-primary-shadow)` }}>
+            <button onClick={saveWizard} className="w-full bg-gradient-to-r from-accent-primary to-accent-tertiary text-white font-black text-lg py-4 rounded-2xl shadow-primary active:scale-95 transition-transform mb-4">
               Commit to {predictedColumn} Priority
             </button>
           </div>
@@ -661,7 +659,7 @@ export default function App() {
       {/* --- GOAL CRUSHED TOAST --- */}
       {goalToast && (
         <div className="absolute top-[35%] left-1/2 -translate-x-1/2 z-[100] animate-in fade-in slide-in-from-top-4 duration-300 pointer-events-none">
-          <div className="bg-surface border border-accent-primary rounded-2xl py-12 px-12 flex justify-center" style={{ boxShadow: `0 0 30px var(--shadow-toast)` }}>
+          <div className="bg-surface border border-accent-primary rounded-2xl py-12 px-12 flex justify-center shadow-toast">
             <div className="relative z-10 flex flex-col items-center">
               <h2 className="text-7xl">🥳</h2>
               <h2 className="text-3xl mt-3 font-black text-transparent bg-clip-text bg-gradient-to-r from-accent-primary to-accent-tertiary-alt text-center">
