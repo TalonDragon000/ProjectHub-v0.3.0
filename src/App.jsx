@@ -484,7 +484,7 @@ export default function App() {
           <p className="text-sm text-text-muted mb-4">Switching projects will refocus your dashboard. Only one active project allowed.</p>
           <div className="space-y-3">
             {projects.map(p => (
-              <div key={p.id} onClick={() => {setActiveProjectId(p.id); setVaultOpen(false);}} className={`p-4 rounded-2xl border cursor-pointer transition-colors ${p.id === activeProjectId ? 'bg-accent-tertiary-dim border-accent-tertiary' : 'bg-bg-surface border-subtle hover:border-border-strong'}`}>
+              <div key={p.id} onClick={() => {setActiveProjectId(p.id); setVaultOpen(false);}} className={`p-4 rounded-2xl border cursor-pointer transition-colors ${p.id === activeProjectId ? 'bg-accent-tertiary/20 border-accent-tertiary' : 'bg-bg-surface border-subtle hover:border-border-strong'}`}>
                 <h3 className={`font-bold ${p.id === activeProjectId ? 'text-accent-tertiary-text' : 'text-text-primary'}`}>{p.name}</h3>
                 <p className="text-xs text-text-faint mt-1 truncate">{p.mission}</p>
               </div>
