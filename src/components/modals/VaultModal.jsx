@@ -10,7 +10,7 @@ export default function VaultModal() {
   return (
     <div className="absolute inset-0 bg-base/95 backdrop-blur-md z-40 flex flex-col p-6 animate-in slide-in-from-top-4">
       <div className="flex justify-between items-center mb-8 pt-4">
-        <h2 className="text-2xl font-bold text-white flex items-center">
+        <h2 className="text-2xl font-bold text-primary flex items-center">
           <Folder className="mr-2 text-accent-tertiary" /> The Vault
         </h2>
         <button onClick={() => setVaultOpen(false)} className="text-muted p-2"><X /></button>
