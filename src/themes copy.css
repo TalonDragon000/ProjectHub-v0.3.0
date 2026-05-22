@@ -1,0 +1,111 @@
+/* ============================================================
+   THEME: Synthwave Dark (Default)
+   RGB tuples are used for main color tokens so Tailwind's
+   opacity modifier syntax (bg-base/80) works correctly.
+   Shadow/glow values use rgba() since they are only consumed
+   by style={{}} props in JSX, not by Tailwind utility classes.
+
+   To create a new theme: copy this :root block, update the
+   comment label, swap all values, and replace :root below.
+   ============================================================ */
+
+:root {
+  /* --- Backgrounds (RGB tuples for Tailwind opacity support) --- */
+  --bg-base:    2 6 23;    /* slate-950 */
+  --bg-surface: 15 23 42;  /* slate-900 */
+  --bg-raised:  30 41 59;  /* slate-800 */
+  --bg-overlay: 51 65 85;  /* slate-700 */
+
+  /* --- Borders (RGB) --- */
+  --border-subtle:  30 41 59;   /* slate-800 */
+  --border-default: 51 65 85;   /* slate-700 */
+  --border-strong:  71 85 105;  /* slate-600 */
+
+  /* --- Text (RGB) --- */
+  --text-primary:   226 232 240; /* slate-200 */
+  --text-secondary: 203 213 225; /* slate-300 */
+  --text-muted:     148 163 184; /* slate-400 */
+  --text-faint:     100 116 139; /* slate-500 */
+  --text-inverted:  2 6 23;      /* slate-950 */
+
+  /* --- Accents (RGB) --- */
+  --accent-primary:      236 72 153;  /* pink-500  */
+  --accent-primary-dark: 219 39 119;  /* pink-600  */
+  --accent-secondary:    6 182 212;   /* cyan-500  */
+  --accent-tertiary:     124 58 237;  /* violet-600 */
+  --accent-tertiary-alt: 167 139 250; /* violet-400 — lighter variant for gradients */
+  --accent-amber:        217 119 6;   /* amber-600 */
+
+  /* --- Priorities (RGB) --- */
+  --priority-high:  236 72 153;  /* pink-500   */
+  --priority-med:   168 85 247;  /* purple-500 */
+  --priority-low:   99 102 241;  /* indigo-500 */
+  --priority-later: 107 114 128; /* gray-500   */
+
+  /* --- Confetti (hex — only consumed by JS getComputedStyle, not Tailwind) --- */
+  --confetti-1: #ec4899;  /* pink    */
+  --confetti-2: #06b6d4;  /* cyan    */
+  --confetti-3: #a855f7;  /* purple  */
+  --confetti-4: #f59e0b;  /* amber   */
+  --confetti-5: #10b981;  /* emerald */
+
+  /* --- Shadows / glows (rgba — only consumed by style={{}} props in JSX) --- */
+  --shadow-nav:      rgba(2, 6, 23, 0.8);
+  --shadow-dock-btn: rgba(236, 72, 153, 0.40);
+  --shadow-selected: rgba(6, 182, 212, 0.50);
+  --shadow-toast:    rgba(236, 72, 153, 0.35);
+  --shadow-primary:  rgba(236, 72, 153, 0.40);
+  --shadow-amber:    rgba(217, 119, 6, 0.30);
+  --shadow-tertiary: rgba(124, 58, 237, 0.30);
+}
+
+
+/* ============================================================
+   THEME: [Blank Slate] — copy this block to create a new theme.
+   Replace :root above with a :root block containing these vars.
+   ============================================================ */
+
+/*
+:root {
+  --bg-base:    ;
+  --bg-surface: ;
+  --bg-raised:  ;
+  --bg-overlay: ;
+
+  --border-subtle:  ;
+  --border-default: ;
+  --border-strong:  ;
+
+  --text-primary:   ;
+  --text-secondary: ;
+  --text-muted:     ;
+  --text-faint:     ;
+  --text-inverted:  ;
+
+  --accent-primary:      ;
+  --accent-primary-dark: ;
+  --accent-secondary:    ;
+  --accent-tertiary:     ;
+  --accent-tertiary-alt: ;
+  --accent-amber:        ;
+
+  --priority-high:  ;
+  --priority-med:   ;
+  --priority-low:   ;
+  --priority-later: ;
+
+  --confetti-1: ;
+  --confetti-2: ;
+  --confetti-3: ;
+  --confetti-4: ;
+  --confetti-5: ;
+
+  --shadow-nav:      ;
+  --shadow-dock-btn: ;
+  --shadow-selected: ;
+  --shadow-toast:    ;
+  --shadow-primary:  ;
+  --shadow-amber:    ;
+  --shadow-tertiary: ;
+}
+*/
