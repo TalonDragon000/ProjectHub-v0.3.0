@@ -58,7 +58,7 @@ export default function HomeDashboard() {
         <div className="bg-surface rounded-2xl p-4 border border-subtle space-y-4 shadow-lg">
           <div className="border-l-2 border-priority-high pl-4 relative">
             <div className="absolute w-2 h-2 bg-priority-high rounded-full -left-[5px] top-1" />
-            <span className="text-xs font-bold text-accent-primary uppercase">Now</span>
+            <span className="text-xs font-bold text-priority-high uppercase">Now</span>
             {nowTasks.length === 0
               ? <p className="text-xs text-faint italic mt-1">No high priority goals.</p>
               : nowTasks.map(t => <p key={t.id} className="text-sm text-primary mt-1">{t.title}</p>)
