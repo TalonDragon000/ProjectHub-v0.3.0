@@ -119,7 +119,7 @@ export default function PriorityWizard() {
               <button
                 key={m}
                 onClick={() => setWizardForm({ ...wizardForm, moscow: m })}
-                className={`flex-1 py-3 text-xs font-bold rounded-lg transition-all ${wizardForm.moscow === m ? (m === 'Must' ? 'bg-accent-primary/80 text-white' : m === "Won't" ? 'bg-overlay text-secondary' : 'bg-raised text-primary shadow-md') : 'text-faint hover:text-secondary'}`}
+                className={`flex-1 py-3 text-xs font-bold rounded-lg transition-all ${wizardForm.moscow === m ? (m === 'Must' ? 'bg-accent-primary/80 text-primary' : m === "Won't" ? 'bg-overlay text-secondary' : 'bg-raised text-primary shadow-md') : 'text-faint hover:text-secondary'}`}
               >
                 {m}
               </button>
