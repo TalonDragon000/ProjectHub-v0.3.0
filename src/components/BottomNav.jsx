@@ -18,7 +18,7 @@ export default function BottomNav() {
       <div className="relative -top-6">
         <button
           onClick={() => setGlobalMenuOpen(!globalMenuOpen)}
-          className={`w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl border-4 border-base transition-all duration-300 ${globalMenuOpen ? 'bg-overlay rotate-45 shadow-lg' : 'bg-gradient-to-br from-accent-primary to-accent-tertiary shadow-dock-btn active:scale-95'}`}
+          className={`w-14 h-14 rounded-full flex items-center justify-center text-primary text-2xl border-4 border-base transition-all duration-300 ${globalMenuOpen ? 'bg-overlay rotate-45 shadow-lg' : 'bg-gradient-to-br from-accent-primary to-accent-tertiary shadow-dock-btn active:scale-95'}`}
         >
           {globalMenuOpen ? <X /> : <Plus />}
         </button>
