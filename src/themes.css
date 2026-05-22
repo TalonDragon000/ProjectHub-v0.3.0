@@ -24,10 +24,10 @@
   --bg-overlay: 203 213 225; /* slate-300 — modals, overlays */
 
   /* --- Borders (RGB) --- */
+  --border-base:    248 250 252; /* slate-50  — off-white, reduces glare */
   --border-subtle:  226 232 240; /* slate-200 */
   --border-default: 203 213 225; /* slate-300 */
   --border-strong:  148 163 184; /* slate-400 */
-  --border-base:    248 250 252; /* slate-50  — off-white, reduces glare */
 
   /* --- Text (RGB) --- */
   --text-primary:   15 23 42;   /* slate-900 — 14.5:1 on bg-base, AAA */
