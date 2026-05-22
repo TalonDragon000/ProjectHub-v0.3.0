@@ -24,7 +24,7 @@ export default function QuickNoteModal() {
       />
       <button
         onClick={saveQuickNote}
-        className="w-full bg-accent-amber text-white font-bold py-4 rounded-xl mt-6 shadow-amber active:scale-95"
+        className="w-full bg-accent-amber text-primary font-bold py-4 rounded-xl mt-6 shadow-amber active:scale-95"
       >
         Send to "To Sort"
       </button>
