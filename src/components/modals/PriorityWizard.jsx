@@ -42,7 +42,7 @@ export default function PriorityWizard() {
                 <button
                   key={tag}
                   onClick={() => toggleTag(tag)}
-                  className={`text-[10px] px-2 py-1 mx-0.5 rounded-full border transition-colors ${wizardForm.tags.includes(tag) ? 'bg-accent-primary border-accent-primary text-white' : 'bg-surface border-default text-muted hover:border-strong'}`}
+                  className={`text-[10px] px-2 py-1 mx-0.5 rounded-full border transition-colors ${wizardForm.tags.includes(tag) ? 'bg-accent-primary border-accent-primary text-primary' : 'bg-surface border-default text-muted hover:border-strong'}`}
                 >
                   + {tag}
                 </button>
@@ -52,7 +52,7 @@ export default function PriorityWizard() {
                 <button
                   key={tag}
                   onClick={() => toggleTag(tag)}
-                  className="text-[10px] px-2 py-1 rounded-full border bg-accent-primary border-accent-primary text-white transition-colors"
+                  className="text-[10px] px-2 py-1 rounded-full border bg-accent-primary border-accent-primary text-primary transition-colors"
                 >
                   + {tag} ×
                 </button>
@@ -119,7 +119,7 @@ export default function PriorityWizard() {
               <button
                 key={m}
                 onClick={() => setWizardForm({ ...wizardForm, moscow: m })}
-                className={`flex-1 py-3 text-xs font-bold rounded-lg transition-all ${wizardForm.moscow === m ? (m === 'Must' ? 'bg-accent-primary/80 text-white' : m === "Won't" ? 'bg-overlay text-secondary' : 'bg-raised text-white shadow-md') : 'text-faint hover:text-secondary'}`}
+                className={`flex-1 py-3 text-xs font-bold rounded-lg transition-all ${wizardForm.moscow === m ? (m === 'Must' ? 'bg-accent-primary/80 text-white' : m === "Won't" ? 'bg-overlay text-secondary' : 'bg-raised text-primary shadow-md') : 'text-faint hover:text-secondary'}`}
               >
                 {m}
               </button>
@@ -189,7 +189,7 @@ export default function PriorityWizard() {
       <div className="pt-4 bg-base border-t border-subtle absolute bottom-0 left-0 w-full px-4 pb-safe-bottom z-50">
         <button
           onClick={saveWizard}
-          className="w-full bg-gradient-to-r from-accent-primary to-accent-tertiary text-white font-black text-lg py-4 rounded-2xl shadow-primary active:scale-95 transition-transform mb-4"
+          className="w-full bg-gradient-to-r from-accent-primary to-accent-tertiary text-primary font-black text-lg py-4 rounded-2xl shadow-primary active:scale-95 transition-transform mb-4"
         >
           Commit to {predictedColumn} Priority
         </button>
