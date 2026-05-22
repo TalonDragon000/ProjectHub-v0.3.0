@@ -18,7 +18,7 @@ export default function PriorityWizard() {
   return (
     <div className="absolute inset-0 bg-base/95 backdrop-blur-xl z-50 flex flex-col p-4 animate-in slide-in-from-bottom-full overflow-hidden">
       <div className="flex justify-between items-center mb-4 pt-2">
-        <h2 className="text-xl font-bold text-white flex items-center">
+        <h2 className="text-xl font-bold text-primary flex items-center">
           <Target className="w-5 h-5 mr-2 text-accent-primary" /> Priority Wizard
         </h2>
         <button onClick={() => setWizardOpen(false)} className="text-muted p-2"><X /></button>
@@ -33,7 +33,7 @@ export default function PriorityWizard() {
             placeholder="Goal Name..."
             value={wizardForm.title}
             onChange={e => setWizardForm({ ...wizardForm, title: e.target.value })}
-            className="w-full bg-transparent border-b-2 border-default focus:border-accent-primary outline-none py-2 text-2xl font-bold text-white transition-colors"
+            className="w-full bg-transparent border-b-2 border-default focus:border-accent-primary outline-none py-2 text-2xl font-bold text-primary transition-colors"
           />
           <div className="flex flex-wrap gap-2 items-center">
             <div>
