@@ -175,7 +175,7 @@ export default function PriorityWizard() {
                   <button
                     key={val}
                     onClick={() => setWizardForm({ ...wizardForm, [metric]: val })}
-                    className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${wizardForm[metric] === val ? 'bg-accent-secondary text-primary scale-110 shadow-selected' : 'bg-surface border-2 border-default text-muted hover:border-strong'}`}
+                    className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${wizardForm[metric] === val ? 'bg-accent-secondary text-inverted scale-110 shadow-selected' : 'bg-surface border-2 border-default text-muted hover:border-strong'}`}
                   >
                     {val}
                   </button>
