@@ -42,7 +42,7 @@ export default function PriorityWizard() {
                 <button
                   key={tag}
                   onClick={() => toggleTag(tag)}
-                  className={`text-[10px] px-2 py-1 mx-0.5 rounded-full border transition-colors ${wizardForm.tags.includes(tag) ? 'bg-accent-primary border-accent-primary text-primary' : 'bg-surface border-default text-muted hover:border-strong'}`}
+                  className={`text-[10px] px-2 py-1 mx-0.5 rounded-full border transition-colors ${wizardForm.tags.includes(tag) ? 'bg-accent-primary border-accent-primary text-inverted' : 'bg-surface border-default text-muted hover:border-strong'}`}
                 >
                   + {tag}
                 </button>
