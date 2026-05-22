@@ -56,7 +56,7 @@ export default function HomeDashboard() {
           <Zap className="w-4 h-4 mr-1" /> GO Roadmap
         </h3>
         <div className="bg-surface rounded-2xl p-4 border border-subtle space-y-4 shadow-lg">
-          <div className="border-l-2 border-accent-primary pl-4 relative">
+          <div className="border-l-2 border-priority-high pl-4 relative">
             <div className="absolute w-2 h-2 bg-priority-high rounded-full -left-[5px] top-1" />
             <span className="text-xs font-bold text-accent-primary uppercase">Now</span>
             {nowTasks.length === 0
