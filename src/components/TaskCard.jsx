@@ -34,7 +34,7 @@ export default function TaskCard({ task }) {
             onClick={() => completeTask(task.id)}
             className="w-7 h-7 shrink-0 rounded-full border-2 border-default flex items-center justify-center hover:bg-accent-secondary hover:border-accent-secondary transition-colors group ml-3"
           >
-            <CheckCircle2 className="w-4 h-4 text-transparent group-hover:text-white" />
+            <CheckCircle2 className="w-4 h-4 text-transparent group-hover:text-primary" />
           </button>
         ) : (
           <button
