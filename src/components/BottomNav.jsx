@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chrome as Home, LayoutList, Plus, X } from 'lucide-react';
+import { Home, LayoutList, Plus, X } from 'lucide-react';
 import { useApp } from '../context/AppContext.jsx';
 
 export default function BottomNav() {
