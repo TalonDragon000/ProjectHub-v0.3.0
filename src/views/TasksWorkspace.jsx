@@ -12,7 +12,7 @@ export default function TasksWorkspace() {
 
       {/* Pagination Header */}
       <div className="flex justify-between items-center px-4 mb-4">
-        <h2 className="text-2xl font-black tracking-wide uppercase text-white flex items-center">
+        <h2 className="text-2xl font-black tracking-wide uppercase text-primary flex items-center">
           {COLUMNS[activeColIndex]}
           <span className="text-faint text-sm ml-2 font-bold tracking-normal uppercase">Priority</span>
         </h2>
