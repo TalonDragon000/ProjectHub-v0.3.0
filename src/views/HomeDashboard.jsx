@@ -1,15 +1,26 @@
 import React from 'react';
-import { Target, Zap, CircleCheck as CheckCircle2, Plus } from 'lucide-react';
+import { Target, Zap, CircleCheck as CheckCircle2, Pencil, Plus } from 'lucide-react';
 import { useApp } from '../context/AppContext.jsx';
 
+const SPECS = [
+  { key: 'who', label: 'WHO', hint: 'Audience' },
+  { key: 'what', label: 'WHAT', hint: 'Product' },
+  { key: 'why', label: 'WHY', hint: 'Problem' },
+];
+
 export default function HomeDashboard() {
-  const { activeProject, projectTasks, completedTasks, nowTasks, nextTasks } = useApp();
+  const { activeProject, projectTasks, completedTasks, nowTasks, nextTasks, openProjectEdit } = useApp();
+
+  const specs = activeProject?.specs || {};
 
   return (
     <div className="p-4 space-y-8 pb-24">
 
       {/* Progress & Mission */}
-      <section className="flex items-center space-x-4 p-4 bg-surface rounded-2xl border border-subtle shadow-lg">
+      <section
+        onClick={openProjectEdit}
+        className="flex items-center space-x-4 p-4 bg-surface rounded-2xl border border-subtle shadow-lg cursor-pointer hover:border-default transition-colors group"
+      >
         <div className="relative w-16 h-16 flex-shrink-0">
           <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
             <path
@@ -28,25 +39,52 @@ export default function HomeDashboard() {
             {Math.round((completedTasks.length / (projectTasks.length || 1)) * 100)}%
           </div>
         </div>
-        <div>
+        <div className="flex-1 min-w-0">
           <h2 className="font-bold text-sm text-secondary">Mission</h2>
-          <p className="text-xs text-muted leading-snug italic">"{activeProject?.mission}"</p>
+          <p className="text-xs text-muted leading-snug italic">
+            "{activeProject?.mission || 'Tap to set a mission statement...'}"
+          </p>
         </div>
+        <Pencil className="w-3.5 h-3.5 text-faint opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
       </section>
 
       {/* Strategy Specs */}
       <section className="space-y-2">
-        <h3 className="text-accent-secondary text-xs font-bold uppercase tracking-widest flex items-center">
-          <Target className="w-4 h-4 mr-1" /> Strategy Specs
-        </h3>
-        <span className="text-[10px] text-faint">( Coming Soon )</span>
+        <div className="flex items-center justify-between">
+          <h3 className="text-accent-secondary text-xs font-bold uppercase tracking-widest flex items-center">
+            <Target className="w-4 h-4 mr-1" /> Strategy Specs
+          </h3>
+          <button
+            onClick={openProjectEdit}
+            className="flex items-center gap-1 text-[10px] text-faint hover:text-primary transition-colors"
+          >
+            <Pencil className="w-3 h-3" /> Edit
+          </button>
+        </div>
         <div className="grid grid-cols-3 gap-2">
-          {['WHO (Audience)', 'WHAT (Product)', 'WHY (Problem)'].map(spec => (
-            <div key={spec} className="bg-surface p-3 rounded-xl border border-subtle border-dashed text-center flex flex-col justify-center items-center opacity-60">
-              <span className="text-[10px] text-faint mb-1">{spec}</span>
-              <Plus className="w-4 h-4 text-faint" />
-            </div>
-          ))}
+          {SPECS.map(({ key, label, hint }) => {
+            const value = specs[key]?.trim();
+            return value ? (
+              <div
+                key={key}
+                onClick={openProjectEdit}
+                className="bg-surface p-3 rounded-xl border border-subtle cursor-pointer hover:border-default transition-colors"
+              >
+                <p className="text-[9px] text-faint uppercase tracking-widest font-bold mb-1.5">{label}</p>
+                <p className="text-xs text-secondary leading-snug">{value}</p>
+              </div>
+            ) : (
+              <button
+                key={key}
+                onClick={openProjectEdit}
+                className="bg-surface p-3 rounded-xl border border-subtle border-dashed text-center flex flex-col justify-center items-center opacity-60 hover:opacity-90 transition-opacity"
+              >
+                <span className="text-[10px] text-faint font-bold mb-1">{label}</span>
+                <span className="text-[9px] text-faint">{hint}</span>
+                <Plus className="w-3.5 h-3.5 text-faint mt-1" />
+              </button>
+            );
+          })}
         </div>
       </section>
 

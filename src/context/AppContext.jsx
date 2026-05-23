@@ -45,6 +45,9 @@ export function AppProvider({ children }) {
   const [viewTaskOpen, setViewTaskOpen] = useState(false);
   const [viewingTask, setViewingTask] = useState(null);
 
+  // --- Project edit modal ---
+  const [projectEditOpen, setProjectEditOpen] = useState(false);
+
   // --- Wizard form ---
   const [wizardForm, setWizardForm] = useState(EMPTY_WIZARD);
   const [customTagInput, setCustomTagInput] = useState('');
@@ -153,9 +156,16 @@ const saveWizard = () => {
     setActiveColIndex(4);
   };
 
+  const updateProject = (updatedProject) => {
+    setProjects(prev => prev.map(p => p.id === updatedProject.id ? updatedProject : p));
+  };
+
+  const openProjectEdit = () => setProjectEditOpen(true);
+  const closeProjectEdit = () => setProjectEditOpen(false);
+
   const createProject = () => {
     if (!projectForm.name.trim()) return;
-    const newProject = { id: Date.now(), ...projectForm };
+    const newProject = { id: Date.now(), specs: { who: '', what: '', why: '' }, ...projectForm };
     setProjects(prev => [...prev, newProject]);
     setActiveProjectId(newProject.id);
     setProjectForm({ name: '', mission: '' });
@@ -210,6 +220,8 @@ const saveWizard = () => {
     goalToast,
     // View task
     viewTaskOpen, viewingTask, openViewTask, closeViewTask,
+    // Project edit
+    projectEditOpen, openProjectEdit, closeProjectEdit, updateProject,
     // Wizard
     wizardForm, setWizardForm, customTagInput, setCustomTagInput, editingTask,
     currentScore, predictedColumn,
