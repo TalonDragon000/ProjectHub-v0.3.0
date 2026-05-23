@@ -144,6 +144,7 @@ const saveWizard = () => {
     setTasks(prev => [...prev, {
       id: Date.now(), projectId: activeProjectId, title: quickNoteText,
       description: '',
+      specs: { who: '', what: '', why: '' },
       reach: 3, impact: 3, confidence: 3, effort: 3, moscow: 'Should',
       column: 'To Sort', completed: false, tags: [],
     }]);
