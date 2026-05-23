@@ -78,7 +78,7 @@ export default function PriorityWizard() {
                       setCustomTagInput('');
                     }
                   }}
-                  className="bg-transparent border-b border-default text-[10px] text-secondary outline-none focus:border-accent-primary w-20 px-1 py-0.5 placeholder:text-faint"
+                  className="bg-transparent border-b border-default text-[10px] text-secondary outline-none focus:border-accent-primary w-20 px-2 py-0.5 placeholder:text-faint"
                 />
                 {customTagInput.trim() && (
                   <button
