@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Target } from 'lucide-react';
+import { X, Target, Check, Trash2 } from 'lucide-react'; // ← added Check, Trash2
 import { useApp } from '../../context/AppContext.jsx';
 import { getGaugeColor } from '../../lib/colors.js';
 import { calculateScore } from '../../lib/rice.js';
@@ -27,24 +27,14 @@ export default function TaskViewModal() {
   const score = calculateScore(t.reach, t.impact, t.confidence, t.effort);
   const gaugeWidth = `${Math.min((parseFloat(score) / 40) * 100, 100)}%`;
 
-  const handlePrioritize = () => {
-    openWizard(t);
-  };
-
-  const handleComplete = () => {
-    completeTask(t.id);
-    closeViewTask();
-  };
-
-  const handleDelete = () => {
-    deleteTask(t.id);
-    closeViewTask();
-  };
+  const handlePrioritize = () => openWizard(t);
+  const handleComplete = () => { completeTask(t.id); closeViewTask(); };
+  const handleDelete = () => { deleteTask(t.id); closeViewTask(); };
 
   return (
     <div className="absolute inset-0 z-50 flex flex-col bg-base/95 backdrop-blur-xl animate-in slide-in-from-bottom-full overflow-hidden">
 
-      {/* Colored priority bar at top */}
+      {/* Colored priority bar */}
       <div className={`h-1 w-full ${getGaugeColor(t.column)}`} />
 
       {/* Header */}
@@ -58,9 +48,9 @@ export default function TaskViewModal() {
       </div>
 
       {/* Scrollable content */}
-      <div className="flex-1 overflow-y-auto px-5 pb-36 space-y-6">
+      <div className="flex-1 overflow-y-auto px-5 pb-8 space-y-5"> {/* ← pb-36 → pb-8 */}
 
-        {/* Title */}
+        {/* Title + description */}
         <div>
           <h2 className="text-2xl font-black text-primary leading-tight">{t.title}</h2>
           {t.description && (
@@ -78,6 +68,34 @@ export default function TaskViewModal() {
             ))}
           </div>
         )}
+
+        {/* ↓ Inline 3-column action buttons */}
+        <div className="grid grid-cols-3 gap-2">
+          <button
+            onClick={handlePrioritize}
+            className="flex flex-col items-center justify-center gap-1.5 py-3 bg-surface border border-default rounded-xl text-xs font-bold text-primary hover:bg-raised transition-colors"
+          >
+            <Target className="w-4 h-4 text-accent-primary" />
+            Edit
+          </button>
+          <button
+            onClick={handleComplete}
+            className="flex flex-col items-center justify-center gap-1.5 py-3 bg-accent-secondary/20 border border-accent-secondary/50 rounded-xl text-xs font-bold text-accent-secondary hover:bg-accent-secondary/30 transition-colors"
+          >
+            <Check className="w-4 h-4" />
+            Complete
+          </button>
+          <button
+            onClick={handleDelete}
+            className="flex flex-col items-center justify-center gap-1.5 py-3 bg-transparent border border-red-500/25 rounded-xl text-xs font-bold text-red-400/70 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/40 transition-colors"
+          >
+            <Trash2 className="w-4 h-4" />
+            Delete
+          </button>
+        </div>
+
+        {/* Divider before RICE */}
+        <div className="border-t border-subtle" />
 
         {/* RICE Score gauge */}
         <div className="bg-surface rounded-2xl border border-subtle p-5 relative overflow-hidden">
@@ -100,7 +118,6 @@ export default function TaskViewModal() {
             </div>
           </div>
 
-          {/* RICE breakdown */}
           <div className="grid grid-cols-4 gap-2">
             {['reach', 'impact', 'confidence', 'effort'].map(metric => (
               <div key={metric} className="bg-raised rounded-xl p-2 text-center border border-default">
@@ -110,34 +127,7 @@ export default function TaskViewModal() {
             ))}
           </div>
         </div>
-
       </div>
-
-      {/* Action footer */}
-      <div className="absolute bottom-0 left-0 w-full bg-base border-t border-subtle px-4 pt-3 pb-safe-bottom space-y-2">
-        <div className="flex gap-2">
-          <button
-            onClick={handlePrioritize}
-            className="flex-1 flex items-center justify-center gap-2 py-3 bg-surface border border-default rounded-xl text-sm font-bold text-primary hover:bg-raised transition-colors"
-          >
-            <Target className="w-4 h-4 text-accent-primary" />
-            Edit / Prioritize
-          </button>
-          <button
-            onClick={handleComplete}
-            className="flex-1 py-3 bg-accent-secondary/20 border border-accent-secondary/50 rounded-xl text-sm font-bold text-accent-secondary hover:bg-accent-secondary/30 transition-colors"
-          >
-            Complete
-          </button>
-        </div>
-        <button
-          onClick={handleDelete}
-          className="w-full py-3 bg-transparent border border-red-500/40 rounded-xl text-sm font-bold text-red-500 hover:bg-red-500/10 transition-colors"
-        >
-          Delete Task
-        </button>
-      </div>
-
     </div>
   );
 }
