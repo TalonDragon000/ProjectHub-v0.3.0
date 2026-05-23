@@ -219,7 +219,7 @@ const saveWizard = () => {
     // Gesture handlers
     handleTouchStart, handleTouchEnd,
     // Actions
-    openWizard, saveWizard, saveQuickNote, createProject, completeTask, deleteTask, toggleTag,
+    openWizard, saveWizard, saveQuickNote, createProject, completeTask, deleteTask, updateTask, toggleTag,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
