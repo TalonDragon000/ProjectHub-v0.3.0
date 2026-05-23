@@ -13,43 +13,38 @@ const MOSCOW_COLOR = {
 };
 
 const METRIC_LABELS = {
-  reach: 'Reach',
-  impact: 'Impact',
-  confidence: 'Confidence',
-  effort: 'Effort',
+  reach: 'Reach', impact: 'Impact', confidence: 'Confidence', effort: 'Effort',
 };
+
+const SPECS = [
+  { key: 'who', label: 'WHO', hint: 'Audience' },
+  { key: 'what', label: 'WHAT', hint: 'Product' },
+  { key: 'why', label: 'WHY', hint: 'Problem' },
+];
 
 export default function TaskViewModal() {
   const { viewTaskOpen, viewingTask, closeViewTask, openWizard } = useApp();
   const [isEditing, setIsEditing] = useState(false);
 
-  // Reset edit mode whenever the modal closes
   if (!viewTaskOpen || !viewingTask) {
     if (isEditing) setIsEditing(false);
     return null;
   }
 
-  // In-place transform — same overlay, edit content swaps in
   if (isEditing) {
-    return (
-      <TaskEditModal
-        task={viewingTask}
-        onCancel={() => setIsEditing(false)}
-        onSave={() => setIsEditing(false)}
-      />
-    );
+    return <TaskEditModal task={viewingTask} onCancel={() => setIsEditing(false)} onSave={() => setIsEditing(false)} />;
   }
 
   const t = viewingTask;
   const score = calculateScore(t.reach, t.impact, t.confidence, t.effort);
   const gaugeWidth = `${Math.min((parseFloat(score) / 40) * 100, 100)}%`;
+  const hasAnySpec = SPECS.some(s => t.specs?.[s.key]?.trim());
 
   return (
     <div className="absolute inset-0 z-50 flex flex-col bg-base/95 backdrop-blur-xl animate-in slide-in-from-bottom-full overflow-hidden">
 
       <div className={`h-1 w-full ${getGaugeColor(t.column)}`} />
 
-      {/* Header */}
       <div className="flex justify-between items-center px-5 pt-4 pb-2">
         <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded border ${MOSCOW_COLOR[t.moscow] || 'bg-raised text-muted border-default'}`}>
           {t.moscow}
@@ -59,8 +54,7 @@ export default function TaskViewModal() {
             onClick={() => setIsEditing(true)}
             className="flex items-center gap-1.5 text-xs font-semibold text-muted hover:text-primary px-2.5 py-1.5 rounded-lg hover:bg-raised transition-colors"
           >
-            <Pencil className="w-3.5 h-3.5" />
-            Edit
+            <Pencil className="w-3.5 h-3.5" /> Edit
           </button>
           <button onClick={closeViewTask} className="text-muted p-2 hover:text-primary transition-colors">
             <X className="w-5 h-5" />
@@ -68,7 +62,6 @@ export default function TaskViewModal() {
         </div>
       </div>
 
-      {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto px-5 pb-8 space-y-5">
 
         <div>
@@ -88,18 +81,43 @@ export default function TaskViewModal() {
           </div>
         )}
 
+        {/* Strategy Specs */}
+        <div>
+          <p className="text-[10px] text-faint uppercase tracking-widest font-bold mb-3">Strategy Specs</p>
+          <div className="grid grid-cols-3 gap-2">
+            {SPECS.map(({ key, label, hint }) => {
+              const value = t.specs?.[key]?.trim();
+              return value ? (
+                <div key={key} className="bg-surface rounded-xl p-3 border border-subtle">
+                  <p className="text-[9px] text-faint uppercase tracking-widest font-bold mb-1.5">{label}</p>
+                  <p className="text-xs text-secondary leading-snug">{value}</p>
+                </div>
+              ) : (
+                <button
+                  key={key}
+                  onClick={() => setIsEditing(true)}
+                  className="bg-surface rounded-xl p-3 border border-subtle border-dashed flex flex-col items-center justify-center gap-1 opacity-50 hover:opacity-80 transition-opacity"
+                >
+                  <p className="text-[9px] text-faint uppercase tracking-widest font-bold">{label}</p>
+                  <p className="text-[9px] text-faint">{hint}</p>
+                </button>
+              );
+            })}
+          </div>
+          {!hasAnySpec && (
+            <p className="text-[10px] text-faint mt-2 text-center">Tap any spec to add via Edit</p>
+          )}
+        </div>
+
         <div className="border-t border-subtle" />
 
-        {/* RICE card — tap to open PriorityWizard */}
+        {/* RICE card — tap to reprioritize */}
         <button
           onClick={() => openWizard(t)}
           className="w-full text-left bg-surface rounded-2xl border border-subtle p-5 relative overflow-hidden hover:border-default transition-colors group"
         >
           <div className="absolute top-0 left-0 h-1 w-full bg-raised">
-            <div
-              className={`h-full transition-all duration-500 ${getGaugeColor(t.column)}`}
-              style={{ width: gaugeWidth }}
-            />
+            <div className={`h-full transition-all duration-500 ${getGaugeColor(t.column)}`} style={{ width: gaugeWidth }} />
           </div>
           <div className="flex justify-between items-end mt-2 mb-4">
             <div>
@@ -116,7 +134,6 @@ export default function TaskViewModal() {
               </span>
             </div>
           </div>
-
           <div className="grid grid-cols-4 gap-2">
             {['reach', 'impact', 'confidence', 'effort'].map(metric => (
               <div key={metric} className="bg-raised rounded-xl p-2 text-center border border-default">
