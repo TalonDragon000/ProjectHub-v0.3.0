@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Check } from 'lucide-react';
+import { X, Check, Archive } from 'lucide-react';
 import { useApp } from '../../context/AppContext.jsx';
 
 const SPECS_CONFIG = [
@@ -9,9 +9,10 @@ const SPECS_CONFIG = [
 ];
 
 export default function ProjectEditModal() {
-  const { projectEditOpen, closeProjectEdit, activeProject, updateProject } = useApp();
+  const { projectEditOpen, closeProjectEdit, activeProject, updateProject, archiveProject } = useApp();
 
   const [form, setForm] = useState({ name: '', mission: '', specs: { who: '', what: '', why: '' } });
+  const [confirmArchive, setConfirmArchive] = useState(false);
 
   useEffect(() => {
     if (activeProject) {
@@ -21,6 +22,7 @@ export default function ProjectEditModal() {
         specs: { who: '', what: '', why: '', ...(activeProject.specs || {}) },
       });
     }
+    setConfirmArchive(false);
   }, [activeProject, projectEditOpen]);
 
   if (!projectEditOpen || !activeProject) return null;
@@ -33,6 +35,14 @@ export default function ProjectEditModal() {
     if (!form.name.trim()) return;
     updateProject({ ...activeProject, ...form });
     closeProjectEdit();
+  };
+
+  const handleArchive = () => {
+    if (!confirmArchive) {
+      setConfirmArchive(true);
+      return;
+    }
+    archiveProject(activeProject.id);
   };
 
   return (
@@ -97,6 +107,42 @@ export default function ProjectEditModal() {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="border-t border-subtle" />
+
+        {/* Archive */}
+        <div className="space-y-2">
+          <p className="text-[10px] text-faint font-bold uppercase tracking-widest">Danger Zone</p>
+          {confirmArchive ? (
+            <div className="bg-red-500/10 border border-red-500/40 rounded-xl p-4 space-y-3">
+              <p className="text-sm text-red-600 font-semibold">Archive "{activeProject.name}"?</p>
+              <p className="text-xs text-red-500/80 leading-snug">
+                The project and all its tasks will be preserved but hidden from your active workspace. You can restore it from the Vault at any time.
+              </p>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleArchive}
+                  className="flex-1 flex items-center justify-center gap-1.5 text-xs font-bold text-white bg-red-500 hover:bg-red-600 px-3 py-2 rounded-lg transition-colors"
+                >
+                  <Archive className="w-3.5 h-3.5" /> Confirm Archive
+                </button>
+                <button
+                  onClick={() => setConfirmArchive(false)}
+                  className="flex-1 text-xs font-bold text-muted bg-raised hover:bg-overlay px-3 py-2 rounded-lg transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button
+              onClick={handleArchive}
+              className="w-full flex items-center justify-center gap-2 text-sm font-semibold text-red-500/80 border border-red-500/20 hover:border-red-500/50 hover:text-red-500 hover:bg-red-500/5 rounded-xl px-4 py-3 transition-colors"
+            >
+              <Archive className="w-4 h-4" /> Archive Project
+            </button>
+          )}
         </div>
 
       </div>

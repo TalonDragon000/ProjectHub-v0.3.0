@@ -4,6 +4,38 @@ This file is the authoritative development history for Project Hub. It documents
 
 ---
 
+## v0.4.0 — Project Lifecycle Management (Archive, Restore, Pin)
+**Status:** Shipped
+
+### What was built
+- **Project archive action (`archiveProject`):** Marks a project `archived: true` and strips its `pinned` flag. If the archived project is currently active, the context automatically switches to the first remaining active project. If none remain, Onboarding is triggered. The edit modal closes on archive.
+- **Project restore action (`restoreProject`):** Sets `archived: false` on a project without changing any other fields. The project re-enters the active list at its original position.
+- **Project pin action (`pinProject`):** Toggles `pinned` boolean on a project. Pinned projects float to the top of the active list via a sort in the `activeProjects` derived value. Pin order within pinned projects is stable (insertion/creation order).
+- **`activeProjects` derived value:** Filters `projects` to `!archived`, then sorts pinned before unpinned with a stable secondary order. Exposed in context.
+- **`archivedProjects` derived value:** Filters `projects` to `archived: true`. Exposed in context.
+- **`pinned: false, archived: false` on new projects:** `createProject()` and `INITIAL_PROJECTS` seed now include both fields as default.
+- **Archive button in `ProjectEditModal`:** A two-step confirmation pattern at the bottom of the edit modal under a "Danger Zone" section header. First tap reveals a confirmation panel with description copy and a red "Confirm Archive" button plus a Cancel escape. Second tap (Confirm) calls `archiveProject`. This prevents accidental archival with a single mis-tap.
+- **Rebuilt `VaultModal`:** Split into two sections — Active and Archived. Active projects render as `ProjectRow` components with a pin toggle icon button on the right edge. Pinned projects display a left cyan stripe and a `Pin` icon in the title row. Archived projects are hidden behind a collapsible accordion (`ChevronDown/Up`). Archived rows show de-emphasized styling (60% opacity) and a cyan "Restore" button.
+
+### Key decisions
+
+**Why two-step confirmation for archive instead of a separate confirmation modal?**
+A modal-within-a-modal pattern (a confirmation dialog stacked on top of the edit modal) creates z-index complexity and a jarring focus shift on mobile. The inline "reveal and confirm" pattern — where the first button tap replaces itself with an expanded confirmation panel — keeps the interaction within the same visual context and uses the same screen real estate. This is the same pattern used by Vercel's project deletion flow and GitHub's repository transfer flow. It adds exactly one extra deliberate tap for safety while avoiding modal nesting.
+
+**Why is archive placement in ProjectEditModal rather than VaultModal?**
+Archive is a lifecycle action that modifies a project's state — it is a destructive operation that belongs alongside other project configuration controls (name, mission, specs). The Vault's purpose is navigation and quick-switching, not project administration. Placing destructive lifecycle actions in a navigation drawer would violate the principle of least surprise (Nielsen, 1994) and would be inconsistent with how iOS and Notion handle project/workspace deletion (always in a settings/admin view, never in a navigation view).
+
+**Why pin toggle in VaultModal rather than ProjectEditModal?**
+Pin is a display preference, not a project property. The user needs to see the current list order to make an informed pin decision — "I want this one at the top of the list I can see right now." That context only exists in the Vault where the list is visible. Placing pin in the edit modal would require the user to open the modal, make a change, close the modal, return to the Vault, and verify the order — a five-step flow for a one-step preference. The inline pin button in the Vault row collapses this to one tap in context, matching how Notion's starred pages and iOS contacts' favorites work.
+
+**Why a stable secondary sort order within pinned items?**
+Allowing pin to also imply a specific order within pinned projects would require a drag-to-reorder mechanic, adding significant implementation complexity (drag-and-drop touch events, visual reorder feedback) for minimal value. Pinning is a binary "important / not important" signal, not a ranked ordering. Users with enough pinned projects to care about their relative order can use the project name to infer order. The stable insertion-order sort ensures behavior is predictable and consistent across sessions.
+
+**Why hide the Archived section entirely when `archivedProjects.length === 0`?**
+Empty-state accordion rows add visual noise without providing any value. An "Archived (0)" row with nothing behind it would make users wonder if something is broken, or invite them to tap it unnecessarily. Hiding the section entirely follows the progressive disclosure principle (Nielsen, 1998) — show complexity only when it is relevant.
+
+---
+
 ## v0.1.0 — Foundation
 **Status:** Shipped
 

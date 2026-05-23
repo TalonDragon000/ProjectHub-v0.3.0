@@ -24,7 +24,7 @@ export const RICE_HINTS = {
 };
 
 export const INITIAL_PROJECTS = [
-  { id: 1, name: 'Demo Project', mission: 'A sample setup for you to explore.', specs: { who: 'Founders & product teams', what: 'A mobile prioritization tool', why: 'Too many tasks, not enough clarity' } }
+  { id: 1, name: 'Demo Project', mission: 'A sample setup for you to explore.', specs: { who: 'Founders & product teams', what: 'A mobile prioritization tool', why: 'Too many tasks, not enough clarity' }, pinned: false, archived: false }
 ];
 
 export const INITIAL_TASKS = [

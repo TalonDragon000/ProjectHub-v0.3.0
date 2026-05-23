@@ -77,6 +77,12 @@ export function AppProvider({ children }) {
 
   // --- Derived ---
   const activeProject = projects.find(p => p.id === activeProjectId);
+  const activeProjects = projects.filter(p => !p.archived).sort((a, b) => {
+    if (a.pinned && !b.pinned) return -1;
+    if (!a.pinned && b.pinned) return 1;
+    return 0;
+  });
+  const archivedProjects = projects.filter(p => p.archived);
   const projectTasks = tasks.filter(t => t.projectId === activeProjectId);
   const activeTasks = sortByRice(
     projectTasks.filter(t => t.column === COLUMNS[activeColIndex] && !t.completed)
@@ -163,9 +169,36 @@ const saveWizard = () => {
   const openProjectEdit = () => setProjectEditOpen(true);
   const closeProjectEdit = () => setProjectEditOpen(false);
 
+  const archiveProject = (id) => {
+    const next = projects.map(p => p.id === id ? { ...p, archived: true, pinned: false } : p);
+    setProjects(next);
+    // If archiving the active project, switch to first available active project
+    if (id === activeProjectId) {
+      const nextActive = next.find(p => !p.archived);
+      if (nextActive) {
+        setActiveProjectId(nextActive.id);
+        setProjectEditOpen(false);
+      } else {
+        setActiveProjectId(null);
+        setProjectEditOpen(false);
+        setOnboardingOpen(true);
+      }
+    } else {
+      setProjectEditOpen(false);
+    }
+  };
+
+  const restoreProject = (id) => {
+    setProjects(prev => prev.map(p => p.id === id ? { ...p, archived: false } : p));
+  };
+
+  const pinProject = (id) => {
+    setProjects(prev => prev.map(p => p.id === id ? { ...p, pinned: !p.pinned } : p));
+  };
+
   const createProject = () => {
     if (!projectForm.name.trim()) return;
-    const newProject = { id: Date.now(), specs: { who: '', what: '', why: '' }, ...projectForm };
+    const newProject = { id: Date.now(), specs: { who: '', what: '', why: '' }, pinned: false, archived: false, ...projectForm };
     setProjects(prev => [...prev, newProject]);
     setActiveProjectId(newProject.id);
     setProjectForm({ name: '', mission: '' });
@@ -208,7 +241,8 @@ const saveWizard = () => {
   const value = {
     // Data
     projects, tasks, activeProjectId, setActiveProjectId,
-    activeProject, projectTasks, activeTasks, completedTasks, nowTasks, nextTasks,
+    activeProject, activeProjects, archivedProjects,
+    projectTasks, activeTasks, completedTasks, nowTasks, nextTasks,
     // Navigation
     activeTab, setActiveTab, activeColIndex, setActiveColIndex,
     // Modals
@@ -233,6 +267,7 @@ const saveWizard = () => {
     handleTouchStart, handleTouchEnd,
     // Actions
     openWizard, saveWizard, saveQuickNote, createProject, completeTask, deleteTask, updateTask, toggleTag,
+    archiveProject, restoreProject, pinProject,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
