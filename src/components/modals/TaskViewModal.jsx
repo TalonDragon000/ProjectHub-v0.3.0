@@ -98,29 +98,25 @@ export default function TaskViewModal() {
         <div className="border-t border-subtle" />
 
         {/* RICE Score gauge */}
-        <button
-          onClick={handlePrioritize}
-          >
-          <div className="bg-surface rounded-2xl border border-subtle p-5 relative overflow-hidden">
-            <div className="absolute top-0 left-0 h-1 w-full bg-raised">
-              <div
-                className={`h-full transition-all duration-500 ${getGaugeColor(t.column)}`}
-                style={{ width: gaugeWidth }}
-              />
+        <div className="bg-surface rounded-2xl border border-subtle p-5 relative overflow-hidden">
+          <div className="absolute top-0 left-0 h-1 w-full bg-raised">
+            <div
+              className={`h-full transition-all duration-500 ${getGaugeColor(t.column)}`}
+              style={{ width: gaugeWidth }}
+            />
+          </div>
+          <div className="flex justify-between items-end mt-2 mb-4">
+            <div>
+              <p className="text-[10px] text-faint uppercase tracking-widest font-bold mb-1">Priority Tier</p>
+              <p className={`text-xl font-black uppercase ${t.column === 'High' ? 'text-accent-primary' : t.column === 'Med' ? 'text-priority-med' : t.column === 'Later' ? 'text-faint' : 'text-priority-low'}`}>
+                {t.column} Priority
+              </p>
             </div>
-            <div className="flex justify-between items-end mt-2 mb-4">
-              <div>
-                <p className="text-[10px] text-faint uppercase tracking-widest font-bold mb-1">Priority Tier</p>
-                <p className={`text-xl font-black uppercase ${t.column === 'High' ? 'text-accent-primary' : t.column === 'Med' ? 'text-priority-med' : t.column === 'Later' ? 'text-faint' : 'text-priority-low'}`}>
-                  {t.column} Priority
-                </p>
-              </div>
-              <div className="text-right">
-                <span className="text-2xl font-black text-primary">{score}</span>
-                <span className="text-xs text-faint ml-1 block">RICE Pts</span>
-              </div>
+            <div className="text-right">
+              <span className="text-2xl font-black text-primary">{score}</span>
+              <span className="text-xs text-faint ml-1 block">RICE Pts</span>
             </div>
-          </button>
+          </div>
 
           <div className="grid grid-cols-4 gap-2">
             {['reach', 'impact', 'confidence', 'effort'].map(metric => (
