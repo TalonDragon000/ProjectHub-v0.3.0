@@ -110,7 +110,7 @@ export default function TaskViewModal() {
               <p className="text-[10px] text-faint uppercase tracking-widest font-bold mb-1">Priority Tier</p>
               <button
                 onClick={handlePrioritize}
-                className="hover:bg-accent-secondary/30 transition-colors"
+                className="hover:animation-pop"
                   >
               <p className={`text-xl font-black uppercase ${t.column === 'High' ? 'text-accent-primary' : t.column === 'Med' ? 'text-priority-med' : t.column === 'Later' ? 'text-faint' : 'text-priority-low'}`}>
                 {t.column} Priority
