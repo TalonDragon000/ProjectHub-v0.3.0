@@ -39,7 +39,7 @@ export function AppProvider({ children }) {
   const [projectForm, setProjectForm] = useState({ name: '', mission: '' });
 
   // --- Quick note ---
-  const [quickNoteText, setQuickNoteText] = useState(title: '', description: '');
+  const [quickNoteText, setQuickNoteText] = useState('');
 
   // --- Swipe refs (passed down to the main content area) ---
   const touchStartX = useRef(0);
