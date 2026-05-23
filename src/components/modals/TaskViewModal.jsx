@@ -76,7 +76,7 @@ export default function TaskViewModal() {
             className="flex flex-col items-center justify-center gap-1.5 py-3 bg-surface border border-default rounded-xl text-xs font-bold text-primary hover:bg-raised transition-colors"
           >
             <Target className="w-4 h-4 text-accent-primary" />
-            Edit
+            Prioritize
           </button>
           <button
             onClick={handleComplete}
