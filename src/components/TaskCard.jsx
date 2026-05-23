@@ -26,7 +26,7 @@ export default function TaskCard({ task }) {
 
       {/* Dropdown — outside overflow-hidden card */}
       {menuOpen && (
-        <div className="absolute top-8 right-2 z-40 bg-surface border border-subtle rounded-xl shadow-2xl overflow-hidden min-w-[160px] animate-in fade-in-0 zoom-in-95 duration-100">
+        <div className="absolute top-8 right-20 z-40 bg-surface border border-subtle rounded-xl shadow-2xl overflow-hidden min-w-[160px] animate-in fade-in-0 zoom-in-95 duration-100">
           <button onClick={handleView} className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-secondary hover:bg-raised hover:text-primary transition-colors text-left">
             <Eye className="w-4 h-4 shrink-0" /> View
           </button>
