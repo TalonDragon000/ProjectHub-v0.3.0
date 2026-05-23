@@ -114,7 +114,7 @@ export default function TaskViewModal() {
                   >
               <p className={`text-xl font-black uppercase ${t.column === 'High' ? 'text-accent-primary' : t.column === 'Med' ? 'text-priority-med' : t.column === 'Later' ? 'text-faint' : 'text-priority-low'}`}>
                 {t.column} Priority
-              </p>
+              </p> [ EDIT ]
               </button>
             </div>
             <div className="text-right">
