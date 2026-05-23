@@ -11,93 +11,74 @@ export default function PriorityWizard() {
     customTagInput, setCustomTagInput,
     currentScore, predictedColumn,
     saveWizard, toggleTag,
+    editingTask,
   } = useApp();
 
   if (!wizardOpen) return null;
 
+  const isCreating = !editingTask;
+
   return (
     <div className="absolute inset-0 bg-base/95 backdrop-blur-xl z-50 flex flex-col p-4 animate-in slide-in-from-bottom-full overflow-hidden">
+
+      {/* Header */}
       <div className="flex justify-between items-center mb-4 pt-2">
-        <h2 className="text-xl font-bold text-primary flex items-center">
-          <Target className="w-5 h-5 mr-2 text-accent-primary" /> Priority Wizard
+        <h2 className="text-xl font-bold text-primary flex items-center gap-2">
+          <Target className="w-5 h-5 text-accent-primary" />
+          {isCreating ? 'New Task' : 'Prioritize'}
         </h2>
-        <button onClick={() => setWizardOpen(false)} className="text-muted p-2"><X /></button>
+        <button onClick={() => setWizardOpen(false)} className="text-muted p-2 hover:text-primary transition-colors">
+          <X />
+        </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto space-y-6 pb-24 hide-scrollbar px-2">
+      <div className="flex-1 overflow-y-auto space-y-5 pb-24 hide-scrollbar px-1">
 
-        {/* Title & Tags */}
-        <div className="space-y-3">
-          <input
-            type="text"
-            placeholder="Goal Name..."
-            value={wizardForm.title}
-            onChange={e => setWizardForm({ ...wizardForm, title: e.target.value })}
-            className="w-full bg-transparent border-b-2 border-default focus:border-accent-primary outline-none py-2 text-2xl font-bold text-primary transition-colors"
-          />
-          <textarea
-            placeholder="Short description (optional)..."
-            value={wizardForm.description || ''}
-            onChange={e => setWizardForm({ ...wizardForm, description: e.target.value })}
-            rows={2}
-            className="w-full bg-transparent border-b border-default focus:border-accent-primary outline-none py-2 text-sm text-secondary placeholder:text-faint transition-colors resize-none"
-          />
-          <div className="flex flex-wrap gap-2 items-center">
+        {/* CREATE MODE: title + description + tags */}
+        {isCreating && (
+          <div className="space-y-3">
+            <input
+              type="text"
+              placeholder="Task name..."
+              value={wizardForm.title}
+              onChange={e => setWizardForm({ ...wizardForm, title: e.target.value })}
+              autoFocus
+              className="w-full bg-transparent border-b-2 border-default focus:border-accent-primary outline-none py-2 text-2xl font-black text-primary transition-colors"
+            />
+            <textarea
+              placeholder="Short description (optional)..."
+              value={wizardForm.description || ''}
+              onChange={e => setWizardForm({ ...wizardForm, description: e.target.value })}
+              rows={2}
+              className="w-full bg-transparent border-b border-default focus:border-accent-primary outline-none py-2 text-sm text-secondary placeholder:text-faint transition-colors resize-none"
+            />
             <div>
-              <label className="text-[10px] text-faint font-bold uppercase tracking-widest mb-1 px-1 block">Quick Tags</label>
-              {QUICK_TAGS.map(tag => (
-                <button
-                  key={tag}
-                  onClick={() => toggleTag(tag)}
-                  className={`text-[10px] px-2 py-1 mx-0.5 rounded-full border transition-colors ${wizardForm.tags.includes(tag) ? 'bg-accent-primary border-accent-primary text-inverted' : 'bg-surface border-default text-muted hover:border-strong'}`}
-                >
-                  + {tag}
-                </button>
-              ))}
-
-              {wizardForm.tags.filter(t => !QUICK_TAGS.includes(t)).map(tag => (
-                <button
-                  key={tag}
-                  onClick={() => toggleTag(tag)}
-                  className="text-[10px] px-2 py-1 rounded-full border bg-accent-primary border-accent-primary text-inverted transition-colors"
-                >
-                  + {tag} ×
-                </button>
-              ))}
-
-              <div className="flex items-center space-x-1 ml-1 my-2">
-                <input
-                  type="text"
-                  placeholder="Custom tag..."
-                  value={customTagInput}
-                  onChange={e => setCustomTagInput(e.target.value)}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter' && customTagInput.trim()) {
-                      e.preventDefault();
-                      if (!wizardForm.tags.includes(customTagInput.trim())) toggleTag(customTagInput.trim());
-                      setCustomTagInput('');
-                    }
-                  }}
-                  className="bg-transparent border-b border-default text-[10px] text-secondary outline-none focus:border-accent-primary w-20 px-1 py-0.5 placeholder:text-faint"
-                />
-                {customTagInput.trim() && (
+              <label className="text-[10px] text-faint font-bold uppercase tracking-widest mb-2 block">Tags</label>
+              <div className="flex flex-wrap gap-1.5">
+                {QUICK_TAGS.map(tag => (
                   <button
-                    onClick={() => {
-                      if (!wizardForm.tags.includes(customTagInput.trim())) toggleTag(customTagInput.trim());
-                      setCustomTagInput('');
-                    }}
-                    className="text-[10px] text-accent-primary font-bold px-1"
+                    key={tag}
+                    onClick={() => toggleTag(tag)}
+                    className={`text-[10px] px-2 py-1 rounded-full border transition-colors ${wizardForm.tags.includes(tag) ? 'bg-accent-primary border-accent-primary text-inverted' : 'bg-surface border-default text-muted hover:border-strong'}`}
                   >
-                    Add
+                    {tag}
                   </button>
-                )}
+                ))}
               </div>
             </div>
           </div>
-        </div>
+        )}
 
-        {/* Live Prediction Gauge */}
-        <div className="bg-surface p-5 rounded-2xl border border-subtle relative overflow-hidden">
+        {/* EDIT MODE: read-only task name as context header */}
+        {!isCreating && (
+          <div className="pb-1 border-b border-subtle">
+            <p className="text-[10px] text-faint uppercase tracking-widest font-bold mb-1">Task</p>
+            <p className="text-lg font-black text-primary leading-snug">{wizardForm.title}</p>
+          </div>
+        )}
+
+        {/* Live prediction gauge — always shown */}
+        <div className="bg-surface p-4 rounded-2xl border border-subtle relative overflow-hidden">
           <div className="absolute top-0 left-0 h-1 w-full bg-raised">
             <div
               className={`h-full transition-all duration-500 ${getGaugeColor(predictedColumn)}`}
@@ -118,9 +99,11 @@ export default function PriorityWizard() {
           </div>
         </div>
 
-        {/* MoSCoW Toggles */}
+        {/* MoSCoW */}
         <div>
-          <label className="text-[10px] text-faint font-bold uppercase tracking-widest mb-2 block">MoSCoW Filter (Overrides RICE)</label>
+          <label className="text-[10px] text-faint font-bold uppercase tracking-widest mb-2 block">
+            MoSCoW <span className="normal-case font-normal">(overrides RICE tier)</span>
+          </label>
           <div className="flex bg-surface rounded-xl p-1 border border-subtle">
             {['Must', 'Should', 'Could', "Won't"].map(m => (
               <button
@@ -134,10 +117,10 @@ export default function PriorityWizard() {
           </div>
         </div>
 
-        {/* RICE Sliders */}
+        {/* RICE sliders */}
         <div className="space-y-3">
-          <div className="flex items-center space-x-2 mb-1">
-            <label className="text-[10px] text-faint font-bold uppercase tracking-widest block">RICE Estimation (Fibonacci Scale)</label>
+          <div className="flex items-center gap-2">
+            <label className="text-[10px] text-faint font-bold uppercase tracking-widest">RICE — Fibonacci Scale</label>
             <button
               onClick={() => setWizardForm({ ...wizardForm, infoOpen: wizardForm.infoOpen === 'fibonacci' ? null : 'fibonacci' })}
               className="text-faint hover:text-accent-secondary transition-colors"
@@ -147,17 +130,16 @@ export default function PriorityWizard() {
           </div>
 
           {wizardForm.infoOpen === 'fibonacci' && (
-            <div className="mb-2 text-[10px] text-secondary bg-raised p-3 rounded-lg border border-default relative">
-              <div className="absolute -top-1 left-[150px] w-2 h-2 bg-raised border-t border-l border-default transform rotate-45" />
+            <div className="text-[10px] text-secondary bg-raised p-3 rounded-lg border border-default">
               <span className="font-bold text-accent-secondary block mb-0.5">Why jump? (1, 2, 3, 5, 8)</span>
-              <span className="text-secondary">As tasks get bigger, they get harder to estimate. This scale removes "false precision". If it feels bigger than a 3, jump to 5 to avoid debating small differences.</span>
+              <span>As tasks get bigger, they get harder to estimate precisely. The gaps remove false precision — if it feels bigger than a 3, jump to 5.</span>
             </div>
           )}
 
           {['reach', 'impact', 'confidence', 'effort'].map(metric => (
             <div key={metric} className="bg-surface p-4 rounded-2xl border border-subtle">
               <div className="flex justify-between items-center mb-3">
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center gap-2">
                   <label className="text-sm font-bold text-primary capitalize">{metric}</label>
                   <button
                     onClick={() => setWizardForm({ ...wizardForm, infoOpen: wizardForm.infoOpen === metric ? null : metric })}
@@ -170,10 +152,9 @@ export default function PriorityWizard() {
               </div>
 
               {wizardForm.infoOpen === metric && (
-                <div className="mb-4 text-[10px] text-secondary bg-raised p-3 rounded-lg border border-default relative">
-                  <div className="absolute -top-1 left-20 w-2 h-2 bg-raised border-t border-l border-default transform rotate-45" />
+                <div className="mb-4 text-[10px] text-secondary bg-raised p-3 rounded-lg border border-default">
                   <span className="font-bold text-accent-secondary block mb-0.5">{RICE_HINTS[metric].title}</span>
-                  <span className="text-secondary">{RICE_HINTS[metric].desc}</span>
+                  <span>{RICE_HINTS[metric].desc}</span>
                 </div>
               )}
 
@@ -193,14 +174,16 @@ export default function PriorityWizard() {
         </div>
       </div>
 
+      {/* Footer CTA */}
       <div className="pt-4 bg-base border-t border-subtle absolute bottom-0 left-0 w-full px-4 pb-safe-bottom z-50">
         <button
           onClick={saveWizard}
           className="w-full bg-gradient-to-r from-accent-primary to-accent-tertiary text-inverted font-black text-lg py-4 rounded-2xl shadow-primary active:scale-95 transition-transform mb-4"
         >
-          Commit to {predictedColumn} Priority
+          {isCreating ? `Create at ${predictedColumn} Priority` : `Commit to ${predictedColumn} Priority`}
         </button>
       </div>
+
     </div>
   );
 }
