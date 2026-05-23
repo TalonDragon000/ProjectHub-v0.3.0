@@ -86,7 +86,7 @@ export default function PriorityWizard() {
                       if (!wizardForm.tags.includes(customTagInput.trim())) toggleTag(customTagInput.trim());
                       setCustomTagInput('');
                     }}
-                    className="text-[10px] text-accent-primary font-bold px-2"
+                    className="text-[10px] text-accent-primary font-bold px-1"
                   >
                     Add
                   </button>
