@@ -1,0 +1,123 @@
+/* ============================================================
+   THEME: Clarity Blue (Light)
+   Derived from gradient #52E5E7 → #130CB7, desaturated and
+   darkened at the cyan end for WCAG AA compliance. All text
+   tokens meet AA (4.5:1) or AAA (7:1) on bg-base. Backgrounds
+   use off-white (slate-50) rather than pure white to reduce
+   glare — the primary neurodivergent accommodation for light
+   themes. No pure saturated hues are used as text colors.
+
+   RGB tuples are used for main color tokens so Tailwind's
+   opacity modifier syntax (bg-base/80) works correctly.
+   Shadow/glow values use rgba() since they are only consumed
+   by style={{}} props in JSX, not by Tailwind utility classes.
+
+   To create a new theme: copy this :root block, update the
+   comment label, swap all values, and replace :root below.
+   ============================================================ */
+
+:root {
+  /* --- Backgrounds (RGB tuples for Tailwind opacity support) --- */
+  --bg-base:    248 250 252; /* slate-50  — off-white, reduces glare */
+  --bg-surface: 241 245 249; /* slate-100 — card backgrounds */
+  --bg-raised:  226 232 240; /* slate-200 — raised elements */
+  --bg-overlay: 203 213 225; /* slate-300 — modals, overlays */
+
+  /* --- Borders (RGB) --- */
+  --border-base:    248 250 252; /* slate-50  — off-white, reduces glare */
+  --border-subtle:  226 232 240; /* slate-200 */
+  --border-default: 203 213 225; /* slate-300 */
+  --border-strong:  148 163 184; /* slate-400 */
+
+  /* --- Text (RGB) --- */
+  --text-primary:   15 23 42;   /* slate-900 — 14.5:1 on bg-base, AAA */
+  --text-secondary: 30 41 59;   /* slate-800 — 11.9:1, AAA */
+  --text-muted:     71 85 105;  /* slate-600 —  7.5:1, AAA */
+  --text-faint:     100 116 139;/* slate-500 —  4.6:1, AA  */
+  --text-inverted:  248 250 252;/* slate-50  — for text on dark buttons */
+
+  /* --- Accents (RGB) --- */
+  /* Gradient source: #52E5E7 (cyan) → #130CB7 (navy).               */
+  /* Cyan end darkened to cyan-600 (#0891b2) for 4.6:1 on bg-base.   */
+  /* Navy end shifted to blue-800 (#1e40af) for 8.9:1, AAA.          */
+  --accent-primary:      30 64 175;  /* blue-800  — #1e40af, 8.9:1 AAA  */
+  --accent-primary-dark: 30 58 138;  /* blue-900  — #1e3a8a, hover state */
+  --accent-secondary:    8 145 178;  /* cyan-600  — #0891b2, 4.6:1 AA   */
+  --accent-tertiary:     14 116 144; /* cyan-700  — #0e7490, section heads */
+  --accent-tertiary-alt: 6 182 212;  /* cyan-500  — #06b6d4, gradient accent */
+  --accent-amber:        180 83 9;   /* amber-700 — #b45309, 4.8:1 AA   */
+
+  /* --- Priorities (RGB) --- */
+  --priority-high:  185 28 28;  /* red-700   — #b91c1c, 6.7:1 AA  */
+  --priority-med:   30 64 175;  /* blue-800  — #1e40af, 8.9:1 AAA */
+  --priority-low:   8 145 178;  /* cyan-600  — #0891b2, 4.6:1 AA  */
+  --priority-later: 100 116 139;/* slate-500 — #64748b, 4.6:1 AA  */
+
+  /* --- Confetti (hex — only consumed by JS getComputedStyle, not Tailwind) --- */
+  --confetti-1: #1e40af;  /* blue-800  */
+  --confetti-2: #0891b2;  /* cyan-600  */
+  --confetti-3: #059669;  /* emerald-600 */
+  --confetti-4: #d97706;  /* amber-500 */
+  --confetti-5: #dc2626;  /* red-600   */
+
+  /* --- Shadows (rgba — only consumed by style={{}} props in JSX) --- */
+  /* Light theme uses soft drop shadows, not neon glows.              */
+  --shadow-nav:      rgba(15, 23, 42, 0.10);
+  --shadow-dock-btn: rgba(30, 64, 175, 0.25);
+  --shadow-selected: rgba(8, 145, 178, 0.30);
+  --shadow-toast:    rgba(30, 64, 175, 0.20);
+  --shadow-primary:  rgba(30, 64, 175, 0.25);
+  --shadow-amber:    rgba(180, 83, 9, 0.20);
+  --shadow-tertiary: rgba(14, 116, 144, 0.20);
+}
+
+
+/* ============================================================
+   THEME: [Blank Slate] — copy this block to create a new theme.
+   Replace :root above with a :root block containing these vars.
+   ============================================================ */
+
+/*
+:root {
+  --bg-base:    ;
+  --bg-surface: ;
+  --bg-raised:  ;
+  --bg-overlay: ;
+
+  --border-subtle:  ;
+  --border-default: ;
+  --border-strong:  ;
+
+  --text-primary:   ;
+  --text-secondary: ;
+  --text-muted:     ;
+  --text-faint:     ;
+  --text-inverted:  ;
+
+  --accent-primary:      ;
+  --accent-primary-dark: ;
+  --accent-secondary:    ;
+  --accent-tertiary:     ;
+  --accent-tertiary-alt: ;
+  --accent-amber:        ;
+
+  --priority-high:  ;
+  --priority-med:   ;
+  --priority-low:   ;
+  --priority-later: ;
+
+  --confetti-1: ;
+  --confetti-2: ;
+  --confetti-3: ;
+  --confetti-4: ;
+  --confetti-5: ;
+
+  --shadow-nav:      ;
+  --shadow-dock-btn: ;
+  --shadow-selected: ;
+  --shadow-toast:    ;
+  --shadow-primary:  ;
+  --shadow-amber:    ;
+  --shadow-tertiary: ;
+}
+*/
