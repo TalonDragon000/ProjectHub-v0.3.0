@@ -98,7 +98,11 @@ export default function TaskViewModal() {
         <div className="border-t border-subtle" />
 
         {/* RICE Score gauge */}
-        <div className="bg-surface rounded-2xl border border-subtle p-5 relative overflow-hidden">
+        <button
+          onClick={handleDelete}>
+          <RICESummary></RICESummary>
+        </button>
+        <div className="RICESummary bg-surface rounded-2xl border border-subtle p-5 relative overflow-hidden">
           <div className="absolute top-0 left-0 h-1 w-full bg-raised">
             <div
               className={`h-full transition-all duration-500 ${getGaugeColor(t.column)}`}
