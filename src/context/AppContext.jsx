@@ -144,7 +144,6 @@ const saveWizard = () => {
     setTasks(prev => [...prev, {
       id: Date.now(), projectId: activeProjectId, title: quickNoteText,
       description: '',
-      specs: { who: '', what: '', why: '' },
       reach: 3, impact: 3, confidence: 3, effort: 3, moscow: 'Should',
       column: 'To Sort', completed: false, tags: [],
     }]);
@@ -153,20 +152,6 @@ const saveWizard = () => {
     setActiveTab('tasks');
     setActiveColIndex(4);
   };
-
-  const saveQuickNoteAndPrioritize = () => {
-  if (!quickNoteText.trim()) return;
-  const newTask = {
-    id: Date.now(), projectId: activeProjectId, title: quickNoteText,
-    description: '', reach: 3, impact: 3, confidence: 3, effort: 3,
-    moscow: 'Should', column: 'To Sort', completed: false, tags: [],
-    specs: { who: '', what: '', why: '' },
-  };
-  setTasks(prev => [...prev, newTask]);
-  setQuickNoteText('');
-  setQuickNoteOpen(false);
-  openWizard(newTask); // opens wizard in edit mode with this task pre-loaded
-};
 
   const createProject = () => {
     if (!projectForm.name.trim()) return;
