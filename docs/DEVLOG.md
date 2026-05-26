@@ -3,6 +3,30 @@
 This file is the authoritative development history for Project Hub. It documents every significant feature, architectural decision, and design rationale in chronological order. Decisions are recorded with the reasoning behind them, drawing on UX research, cognitive psychology, and product strategy principles.
 
 ---
+<details>
+<summary>Devlog Template</summary>
+## v0.X.0 — Template Devlog Update
+**Status:** Shipped
+### What was built
+- **Blank slate first run:**
+### Key decisions
+**Why remove the seed data rather than hiding it?**
+</details>
+
+---
+
+## v0.5.1 — Launch Prep
+**Status:** Beta Launch
+
+### What was built
+- **X post:** https://x.com/talondragon000/status/2059078608849953021
+- **Previous PH Icons:** Used previously created ProjectHub icons for the manifest file. Okay as an initial brand until everything is cleaned up and finalized. 
+
+### Key decisions
+**Posting on X**
+X/Twitter is a social platform frequented by developers and app builders. Not only are they a key audience, they *should* also provide great beta test feedback as fellow peers. It is also a ProductHunt requirement to post initially to at least one social site for our campaign. 
+
+---
 
 ## v0.5.0 — Blank Slate First Run with Opt-In Demo
 **Status:** Shipped
