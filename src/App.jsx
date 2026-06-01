@@ -1,5 +1,7 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { useApp } from './context/AppContext.jsx';
+import { useAuth } from './context/AuthContext.jsx';
+import { enableSync, disableSync, pullFromCloud, pushToCloud } from './storage/index.js';
 
 import AppHeader from './components/AppHeader.jsx';
 import BottomNav from './components/BottomNav.jsx';
@@ -18,9 +20,41 @@ const QuickNoteModal   = lazy(() => import('./components/modals/QuickNoteModal.j
 const VaultModal       = lazy(() => import('./components/modals/VaultModal.jsx'));
 const TaskViewModal    = lazy(() => import('./components/modals/TaskViewModal.jsx'));
 const ProjectEditModal = lazy(() => import('./components/modals/ProjectEditModal.jsx'));
+const RecoveryKeyModal = lazy(() => import('./components/modals/RecoveryKeyModal.jsx'));
+const UnlockModal      = lazy(() => import('./components/modals/UnlockModal.jsx'));
 
 export default function App() {
-  const { activeTab, handleTouchStart, handleTouchEnd } = useApp();
+  const { activeTab, handleTouchStart, handleTouchEnd, setProjects, setTasks } = useApp();
+  const { isAuthenticated, isUnlocked, needsSetup, needsUnlock, dismissAuth } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated && isUnlocked) {
+      enableSync();
+      pullFromCloud().then((data) => {
+        if (data) {
+          setProjects(data.projects);
+          setTasks(data.tasks);
+        }
+      }).catch(() => {});
+    } else {
+      disableSync();
+    }
+  }, [isAuthenticated, isUnlocked, setProjects, setTasks]);
+
+  const handleRecoveryComplete = () => {
+    const projects = JSON.parse(localStorage.getItem('projecthub_projects') || '[]');
+    const tasks = JSON.parse(localStorage.getItem('projecthub_tasks') || '[]');
+    pushToCloud(projects, tasks).catch(() => {});
+  };
+
+  const handleUnlocked = () => {
+    pullFromCloud().then((data) => {
+      if (data) {
+        setProjects(data.projects);
+        setTasks(data.tasks);
+      }
+    }).catch(() => {});
+  };
 
   return (
     <div className="w-full max-w-md mx-auto h-screen bg-base text-primary flex flex-col font-sans relative overflow-hidden select-none">
@@ -47,6 +81,8 @@ export default function App() {
         <PriorityWizard />
         <TaskViewModal />
         <ProjectEditModal />
+        {needsSetup && <RecoveryKeyModal onComplete={handleRecoveryComplete} />}
+        {needsUnlock && <UnlockModal onUnlocked={handleUnlocked} onDismiss={dismissAuth} />}
       </Suspense>
 
       <GoalToast />

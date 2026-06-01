@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.106.2",
     "canvas-confetti": "^1.9.4",
     "eslint": "^10.4.0",
     "lucide-react": "^0.400.0",

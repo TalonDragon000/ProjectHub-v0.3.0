@@ -256,6 +256,7 @@ const saveWizard = () => {
     projects, tasks, activeProjectId, setActiveProjectId,
     activeProject, activeProjects, archivedProjects,
     projectTasks, activeTasks, completedTasks, nowTasks, nextTasks,
+    setProjects, setTasks,
     // Navigation
     activeTab, setActiveTab, activeColIndex, setActiveColIndex,
     // Modals
