@@ -19,7 +19,7 @@ export default function PriorityWizard() {
   const isCreating = !editingTask;
 
   return (
-    <div className="absolute inset-0 bg-base/95 backdrop-blur-xl z-50 flex flex-col p-4 animate-in slide-in-from-bottom-full overflow-hidden">
+    <div className="PriorityWizardHeader absolute inset-0 bg-base/95 backdrop-blur-xl z-50 flex flex-col p-4 animate-in slide-in-from-bottom-full overflow-hidden">
 
       {/* Header */}
       <div className="flex justify-between items-center mb-4 pt-2">
