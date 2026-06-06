@@ -6,7 +6,7 @@ export default function AppHeader() {
   const { activeProject, setVaultOpen, openProjectEdit } = useApp();
 
   return (
-    <header className="p-4 border-b border-subtle flex justify-between items-center bg-surface z-10">
+    <header className="Section-AppHeader p-4 border-b border-subtle flex justify-between items-center bg-surface z-10">
       <div onClick={() => setVaultOpen(true)} className="cursor-pointer active:opacity-70 flex items-center space-x-2 flex-1 min-w-0">
         <Folder className="w-5 h-5 text-accent-tertiary shrink-0" />
         <div className="min-w-0">
