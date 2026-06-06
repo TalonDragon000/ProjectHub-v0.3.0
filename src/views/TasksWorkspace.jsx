@@ -8,7 +8,7 @@ export default function TasksWorkspace() {
   const { activeColIndex, setActiveColIndex, activeTasks, setQuickNoteOpen } = useApp();
 
   return (
-    <div className="h-full flex flex-col pt-4">
+    <div className="TasksHeader h-full flex flex-col pt-4">
 
       {/* Pagination Header */}
       <div className="flex justify-between items-center px-4 mb-4">
