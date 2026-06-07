@@ -19,15 +19,21 @@ const SESSION_KEY_STORAGE = 'projecthub_session_key';
 const SESSION_SALT_STORAGE = 'projecthub_session_salt';
 const GUEST_STORAGE = 'projecthub_guest_mode';
 
+// Read guest flag synchronously — no async work needed.
+const readIsGuest = () => localStorage.getItem(GUEST_STORAGE) === 'true';
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [session, setSession] = useState(null);
   const [cryptoKey, setCryptoKey] = useState(null);
   const [salt, setSalt] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // loading only stays true when there may be a valid session to restore.
+  // Guest users get loading=false immediately; unknown users show the auth
+  // page straight away and transition silently when getSession() resolves.
+  const [loading, setLoading] = useState(!readIsGuest());
   const [needsSetup, setNeedsSetup] = useState(false);
   const [needsUnlock, setNeedsUnlock] = useState(false);
-  const [isGuest, setIsGuestState] = useState(() => localStorage.getItem(GUEST_STORAGE) === 'true');
+  const [isGuest, setIsGuestState] = useState(readIsGuest);
 
   const isAuthenticated = !!user;
   const isUnlocked = !!cryptoKey;
@@ -55,11 +61,13 @@ export function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
+    // If already in guest mode, skip the Supabase session check entirely.
+    if (readIsGuest()) return;
+
     supabase.auth.getSession().then(({ data: { session: s } }) => {
       setSession(s);
       setUser(s?.user ?? null);
       if (s?.user) {
-        // Authenticated users override guest mode
         localStorage.removeItem(GUEST_STORAGE);
         setIsGuestState(false);
         restoreSessionKey().then(async (restored) => {
@@ -74,6 +82,7 @@ export function AuthProvider({ children }) {
           setLoading(false);
         });
       } else {
+        // No session — auth page is already visible; just clear loading.
         setLoading(false);
       }
     });
@@ -137,6 +146,7 @@ export function AuthProvider({ children }) {
   const continueAsGuest = () => {
     localStorage.setItem(GUEST_STORAGE, 'true');
     setIsGuestState(true);
+    setLoading(false);
   };
 
   const exitGuestMode = () => {
@@ -144,8 +154,6 @@ export function AuthProvider({ children }) {
     setIsGuestState(false);
   };
 
-  // Generates and stores the encryption key silently (no display).
-  // Returns the display key string so ProfileModal can show it on demand.
   const setupRecoveryKey = async () => {
     const { display, raw } = generateRecoveryKey();
     const newSalt = generateSalt();

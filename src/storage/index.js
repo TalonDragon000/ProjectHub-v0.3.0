@@ -1,10 +1,24 @@
 import { localStorageAdapter } from './localStorageAdapter.js';
-import { supabaseAdapter } from './supabaseAdapter.js';
 
 let syncEnabled = false;
 
+// Lazily resolved — only imported after the user authenticates and
+// enableSync() is called. This keeps crypto.js and compress.js out
+// of the initial bundle entirely.
+let _supabaseAdapter = null;
+async function getAdapter() {
+  if (!_supabaseAdapter) {
+    const mod = await import('./supabaseAdapter.js');
+    _supabaseAdapter = mod.supabaseAdapter;
+  }
+  return _supabaseAdapter;
+}
+
 export function enableSync() {
   syncEnabled = true;
+  // Kick off the import immediately so it's ready by the time the first
+  // save comes in — avoids a waterfall on the very first write.
+  getAdapter().catch(() => {});
 }
 
 export function disableSync() {
@@ -29,7 +43,7 @@ export const storage = {
 
   saveProjects(projects) {
     localStorageAdapter.saveProjects(projects);
-    backgroundSync(() => supabaseAdapter.saveProjects(projects));
+    backgroundSync(async () => (await getAdapter()).saveProjects(projects));
   },
 
   getTasks() {
@@ -38,14 +52,15 @@ export const storage = {
 
   saveTasks(tasks) {
     localStorageAdapter.saveTasks(tasks);
-    backgroundSync(() => supabaseAdapter.saveTasks(tasks));
+    backgroundSync(async () => (await getAdapter()).saveTasks(tasks));
   },
 };
 
 export async function pullFromCloud() {
   if (!syncEnabled) return null;
+  const adapter = await getAdapter();
 
-  const remoteUpdatedAt = await supabaseAdapter.getUpdatedAt();
+  const remoteUpdatedAt = await adapter.getUpdatedAt();
   if (!remoteUpdatedAt) return null;
 
   const localTimestamp = localStorage.getItem('projecthub_sync_ts');
@@ -53,8 +68,8 @@ export async function pullFromCloud() {
     return null;
   }
 
-  const projects = await supabaseAdapter.getProjects();
-  const tasks = await supabaseAdapter.getTasks();
+  const projects = await adapter.getProjects();
+  const tasks = await adapter.getTasks();
 
   localStorageAdapter.saveProjects(projects);
   localStorageAdapter.saveTasks(tasks);
@@ -65,6 +80,7 @@ export async function pullFromCloud() {
 
 export async function pushToCloud(projects, tasks) {
   if (!syncEnabled) return;
-  await supabaseAdapter.saveFullState(projects, tasks);
+  const adapter = await getAdapter();
+  await adapter.saveFullState(projects, tasks);
   localStorage.setItem('projecthub_sync_ts', new Date().toISOString());
 }
