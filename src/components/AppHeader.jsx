@@ -1,9 +1,11 @@
 import React from 'react';
-import { Folder, Settings } from 'lucide-react';
+import { Folder, CircleUser as UserCircle } from 'lucide-react';
 import { useApp } from '../context/AppContext.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
 
 export default function AppHeader() {
-  const { activeProject, setVaultOpen, openProjectEdit } = useApp();
+  const { activeProject, setVaultOpen, setProfileOpen } = useApp();
+  const { isGuest } = useAuth();
 
   return (
     <header className="Section-AppHeader p-4 border-b border-subtle flex justify-between items-center bg-surface z-10">
@@ -17,11 +19,14 @@ export default function AppHeader() {
         </div>
       </div>
       <button
-        onClick={openProjectEdit}
-        className="ml-3 shrink-0 w-8 h-8 flex items-center justify-center rounded-lg text-faint hover:text-primary hover:bg-raised transition-colors"
-        aria-label="Edit project settings"
+        onClick={() => setProfileOpen(true)}
+        className="ml-3 shrink-0 w-8 h-8 flex items-center justify-center rounded-lg transition-colors relative"
+        aria-label="Open profile and settings"
       >
-        <Settings className="w-4 h-4" />
+        <UserCircle className={`w-5 h-5 transition-colors ${isGuest ? 'text-accent-amber' : 'text-faint hover:text-primary'}`} />
+        {isGuest && (
+          <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-accent-amber border border-surface" />
+        )}
       </button>
     </header>
   );

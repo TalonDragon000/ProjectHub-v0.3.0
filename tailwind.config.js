@@ -41,6 +41,11 @@ export default {
         'priority-med':   'rgb(var(--priority-med) / <alpha-value>)',
         'priority-low':   'rgb(var(--priority-low) / <alpha-value>)',
         'priority-later': 'rgb(var(--priority-later) / <alpha-value>)',
+
+        // Status
+        success: 'rgb(var(--status-success) / <alpha-value>)',
+        warning: 'rgb(var(--status-warning) / <alpha-value>)',
+        error:   'rgb(var(--status-error) / <alpha-value>)',
       },
       boxShadow: {
         'nav':      '0 -10px 40px var(--shadow-nav)',

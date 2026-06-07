@@ -1,6 +1,7 @@
 import React from 'react';
-import { Target, Zap, CircleCheck as CheckCircle2, Pencil, Plus } from 'lucide-react';
+import { Target, Zap, CircleCheck as CheckCircle2, Pencil, Plus, CloudOff } from 'lucide-react';
 import { useApp } from '../context/AppContext.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
 
 const SPECS = [
   { key: 'who', label: 'WHO', hint: 'Audience' },
@@ -9,12 +10,28 @@ const SPECS = [
 ];
 
 export default function HomeDashboard() {
-  const { activeProject, projectTasks, completedTasks, nowTasks, nextTasks, openProjectEdit } = useApp();
+  const { activeProject, projectTasks, completedTasks, nowTasks, nextTasks, openProjectEdit, setProfileOpen } = useApp();
+  const { isGuest } = useAuth();
 
   const specs = activeProject?.specs || {};
 
   return (
     <div className="p-4 space-y-8 pb-24">
+
+      {/* Guest mode nudge banner */}
+      {isGuest && (
+        <button
+          onClick={() => setProfileOpen(true)}
+          className="w-full flex items-center gap-3 bg-accent-amber/8 border border-accent-amber/25 rounded-2xl px-4 py-3 text-left hover:bg-accent-amber/12 transition-colors"
+        >
+          <CloudOff className="w-4 h-4 text-accent-amber shrink-0" />
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-semibold text-primary">Your data is local only</p>
+            <p className="text-[11px] text-muted mt-0.5">Create a free account to back up and sync across devices.</p>
+          </div>
+          <span className="text-[11px] font-semibold text-accent-amber shrink-0">Sign up</span>
+        </button>
+      )}
 
       {/* Progress & Mission */}
       <section

@@ -17,6 +17,7 @@ const AuthContext = createContext(null);
 
 const SESSION_KEY_STORAGE = 'projecthub_session_key';
 const SESSION_SALT_STORAGE = 'projecthub_session_salt';
+const GUEST_STORAGE = 'projecthub_guest_mode';
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -26,6 +27,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [needsSetup, setNeedsSetup] = useState(false);
   const [needsUnlock, setNeedsUnlock] = useState(false);
+  const [isGuest, setIsGuestState] = useState(() => localStorage.getItem(GUEST_STORAGE) === 'true');
 
   const isAuthenticated = !!user;
   const isUnlocked = !!cryptoKey;
@@ -57,6 +59,9 @@ export function AuthProvider({ children }) {
       setSession(s);
       setUser(s?.user ?? null);
       if (s?.user) {
+        // Authenticated users override guest mode
+        localStorage.removeItem(GUEST_STORAGE);
+        setIsGuestState(false);
         restoreSessionKey().then(async (restored) => {
           if (!restored) {
             const exists = await checkVaultExists(s.user.id);
@@ -86,6 +91,8 @@ export function AuthProvider({ children }) {
         resetSupabaseAdapter();
       }
       if (event === 'SIGNED_IN' && s?.user) {
+        localStorage.removeItem(GUEST_STORAGE);
+        setIsGuestState(false);
         (async () => {
           const restored = await restoreSessionKey();
           if (!restored) {
@@ -127,6 +134,18 @@ export function AuthProvider({ children }) {
     await supabase.auth.signOut();
   };
 
+  const continueAsGuest = () => {
+    localStorage.setItem(GUEST_STORAGE, 'true');
+    setIsGuestState(true);
+  };
+
+  const exitGuestMode = () => {
+    localStorage.removeItem(GUEST_STORAGE);
+    setIsGuestState(false);
+  };
+
+  // Generates and stores the encryption key silently (no display).
+  // Returns the display key string so ProfileModal can show it on demand.
   const setupRecoveryKey = async () => {
     const { display, raw } = generateRecoveryKey();
     const newSalt = generateSalt();
@@ -190,6 +209,7 @@ export function AuthProvider({ children }) {
       loading,
       isAuthenticated,
       isUnlocked,
+      isGuest,
       needsSetup,
       needsUnlock,
       signInWithEmail,
@@ -197,6 +217,8 @@ export function AuthProvider({ children }) {
       signInWithPassword,
       signInWithGoogle,
       signOut,
+      continueAsGuest,
+      exitGuestMode,
       setupRecoveryKey,
       unlockWithRecoveryKey,
       dismissAuth,

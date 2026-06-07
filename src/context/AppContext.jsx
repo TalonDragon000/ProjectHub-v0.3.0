@@ -48,6 +48,9 @@ export function AppProvider({ children }) {
   // --- Project edit modal ---
   const [projectEditOpen, setProjectEditOpen] = useState(false);
 
+  // --- Profile modal ---
+  const [profileOpen, setProfileOpen] = useState(false);
+
   // --- Wizard form ---
   const [wizardForm, setWizardForm] = useState(EMPTY_WIZARD);
   const [customTagInput, setCustomTagInput] = useState('');
@@ -270,6 +273,8 @@ const saveWizard = () => {
     viewTaskOpen, viewingTask, openViewTask, closeViewTask,
     // Project edit
     projectEditOpen, openProjectEdit, closeProjectEdit, updateProject,
+    // Profile
+    profileOpen, setProfileOpen,
     // Wizard
     wizardForm, setWizardForm, customTagInput, setCustomTagInput, editingTask,
     currentScore, predictedColumn,
