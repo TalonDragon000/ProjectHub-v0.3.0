@@ -174,8 +174,8 @@ All data persists automatically to `localStorage` with no account or server requ
 
 1. **Clone and install dependencies:**
     ```bash
-    git clone https://github.com/TalonDragon000/ProjectHub-v0.2.0.git
-    cd ProjectHub-v0.2.0
+    git clone https://github.com/TalonDragon000/ProjectHub-v0.3.0.git
+    cd ProjectHub-v0.3.0
     npm install
     ```
 
