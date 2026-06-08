@@ -48,6 +48,7 @@ function AppShellInner() {
     const projects = JSON.parse(localStorage.getItem('projecthub_projects') || '[]');
     const tasks = JSON.parse(localStorage.getItem('projecthub_tasks') || '[]');
     pushToCloud(projects, tasks).catch(() => {});
+    dismissAuth();
   };
 
   const handleUnlocked = () => {
