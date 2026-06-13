@@ -19,7 +19,9 @@ self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
 
   // Never cache Supabase API calls or auth endpoints
-  if (url.hostname.includes('supabase.co') || url.hostname.includes('supabase.in')) return;
+  if (url.hostname.includes('supabase.co') || url.hostname.includes('supabase.in')) {
+    return;
+  }
 
   e.respondWith(
     fetch(e.request)
